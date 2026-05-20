@@ -5,6 +5,7 @@ import {
   useState,
 } from "react"
 
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 import { useCheckout } from "../../context/CheckoutContext"
@@ -151,12 +152,6 @@ export default function Checkout() {
 
     try {
 
-      /*
-      =====================================
-      ITENS
-      =====================================
-      */
-
       const items = cart.map(item => ({
 
         id: item.id,
@@ -171,12 +166,6 @@ export default function Checkout() {
 
       }))
 
-      /*
-      =====================================
-      EXTERNAL REFERENCE
-      =====================================
-      */
-
       const externalReference =
         crypto.randomUUID()
 
@@ -184,12 +173,6 @@ export default function Checkout() {
         "EXTERNAL REFERENCE:",
         externalReference
       )
-
-      /*
-      =====================================
-      CREATE PREFERENCE
-      =====================================
-      */
 
       const response = await fetch(
         "/api/create-preference",
@@ -221,12 +204,6 @@ export default function Checkout() {
         "CREATE PREFERENCE:",
         data
       )
-
-      /*
-      =====================================
-      REDIRECT MP
-      =====================================
-      */
 
       if (data.init_point) {
 
@@ -279,6 +256,14 @@ export default function Checkout() {
 
         {/* FORMULÁRIO */}
         <div className="bg-white rounded-[30px] p-10">
+
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-[#6b5a4d] hover:opacity-70 transition mb-8"
+          >
+            <span>←</span>
+            <span>Continuar comprando</span>
+          </Link>
 
           <h1 className="text-5xl font-bold mb-12">
             Checkout
