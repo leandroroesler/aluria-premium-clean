@@ -10,7 +10,9 @@ const client = new MercadoPagoConfig({
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
+
   try {
+
     const body = await req.json()
 
     console.log(
@@ -18,7 +20,8 @@ export async function POST(req: Request) {
       JSON.stringify(body, null, 2)
     )
 
-    const paymentId = body?.data?.id
+    const paymentId =
+      body?.data?.id
 
     if (!paymentId) {
 
@@ -32,13 +35,20 @@ export async function POST(req: Request) {
 
     }
 
+    /*
+    =====================================
+    CONSULTAR PAGAMENTO MP
+    =====================================
+    */
+
     let payment
 
     try {
 
-      payment = await new Payment(client).get({
-        id: paymentId,
-      })
+      payment =
+        await new Payment(client).get({
+          id: paymentId,
+        })
 
       console.log(
         "PAGAMENTO MP:",
@@ -54,7 +64,8 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          error: "Erro consulta pagamento",
+          error:
+            "Erro consulta pagamento",
         },
         {
           status: 500,
@@ -65,13 +76,10 @@ export async function POST(req: Request) {
 
     if (!payment) {
 
-      console.log(
-        "PAGAMENTO NÃO ENCONTRADO"
-      )
-
       return NextResponse.json(
         {
-          error: "Pagamento inexistente",
+          error:
+            "Pagamento inexistente",
         },
         {
           status: 500,
@@ -80,20 +88,18 @@ export async function POST(req: Request) {
 
     }
 
-    console.log(
-      "STATUS MP:",
-      payment.status
-    )
+    /*
+    =====================================
+    VALIDAR EXTERNAL REFERENCE
+    =====================================
+    */
 
     if (!payment.external_reference) {
 
-      console.log(
-        "EXTERNAL_REFERENCE AUSENTE"
-      )
-
       return NextResponse.json(
         {
-          error: "external_reference ausente",
+          error:
+            "external_reference ausente",
         },
         {
           status: 500,
@@ -110,18 +116,23 @@ export async function POST(req: Request) {
       orderId
     )
 
-    const customerName = [
+    /*
+    =====================================
+    METADATA COMPLETA
+    =====================================
+    */
 
-      payment.additional_info?.payer?.first_name,
+    const metadata =
+      payment.metadata || {}
 
-      payment.additional_info?.payer?.last_name,
-
-    ]
-      .filter(Boolean)
-      .join(" ")
+    const customerName = `
+      ${metadata.first_name || ""}
+      ${metadata.last_name || ""}
+    `
+      .trim()
 
     const customerEmail =
-      payment.metadata?.email ||
+      metadata.email ||
       payment.payer?.email ||
       ""
 
@@ -131,22 +142,13 @@ export async function POST(req: Request) {
     =====================================
     */
 
-    const { count, error: countError } =
+    const { count } =
       await supabaseAdmin
         .from("orders")
         .select("*", {
           count: "exact",
           head: true,
         })
-
-    if (countError) {
-
-      console.log(
-        "ERRO CONTAGEM PEDIDOS:",
-        countError
-      )
-
-    }
 
     const orderNumber =
       `ALR-${1001 + (count || 0)}`
@@ -158,27 +160,87 @@ export async function POST(req: Request) {
 
     /*
     =====================================
+    BUSCAR PEDIDO EXISTENTE
+    =====================================
+    */
+
+    const {
+      data: existingOrder,
+    } = await supabaseAdmin
+      .from("orders")
+      .select("*")
+      .eq(
+        "external_reference",
+        orderId
+      )
+      .maybeSingle()
+
+    /*
+    =====================================
+    EVITAR DUPLICIDADE
+    =====================================
+    */
+
+    const customerEmailAlreadySent =
+      existingOrder?.buyer_email_sent
+
+    const internalEmailAlreadySent =
+      existingOrder?.email_sent
+
+    /*
+    =====================================
+    ITEMS
+    =====================================
+    */
+
+    let parsedItems = []
+
+    try {
+
+      parsedItems =
+        metadata.items
+          ? JSON.parse(
+              metadata.items
+            )
+          : []
+
+    } catch {
+
+      parsedItems = []
+
+    }
+
+    /*
+    =====================================
     DADOS PEDIDO
     =====================================
     */
 
     const orderData = {
 
-      order_number: orderNumber,
+      order_number:
+        existingOrder?.order_number ||
+        orderNumber,
 
-      external_reference: orderId,
+      external_reference:
+        orderId,
 
-      payment_id: String(payment.id),
+      payment_id:
+        String(payment.id),
 
-      status: payment.status,
+      status:
+        payment.status,
 
-      payment_status: payment.status,
+      payment_status:
+        payment.status,
 
       total:
         payment.transaction_amount || 0,
 
       subtotal:
-        payment.transaction_amount || 0,
+        Number(
+          metadata.subtotal || 0
+        ),
 
       transaction_amount:
         payment.transaction_amount || 0,
@@ -188,9 +250,38 @@ export async function POST(req: Request) {
       payment_method:
         payment.payment_method_id || "",
 
-      customer_name: customerName,
+      customer_name:
+        customerName,
 
-      customer_email: customerEmail,
+      customer_email:
+        customerEmail,
+
+      phone:
+        metadata.phone || "",
+
+      cpf:
+        metadata.cpf || "",
+
+      zip_code:
+        metadata.zip_code || "",
+
+      street:
+        metadata.street || "",
+
+      number:
+        metadata.number || "",
+
+      neighborhood:
+        metadata.neighborhood || "",
+
+      city:
+        metadata.city || "",
+
+      state:
+        metadata.state || "",
+
+      items:
+        parsedItems,
 
       paid_at:
         payment.status === "approved"
@@ -203,6 +294,12 @@ export async function POST(req: Request) {
       "SALVANDO PEDIDO:",
       JSON.stringify(orderData, null, 2)
     )
+
+    /*
+    =====================================
+    UPSERT SUPABASE
+    =====================================
+    */
 
     const { error } =
       await supabaseAdmin
@@ -221,7 +318,8 @@ export async function POST(req: Request) {
 
       return NextResponse.json(
         {
-          error: "Erro Supabase",
+          error:
+            "Erro Supabase",
         },
         {
           status: 500,
@@ -236,15 +334,11 @@ export async function POST(req: Request) {
 
     /*
     =====================================
-    EMAILS APENAS SE APPROVED
+    EMAILS SOMENTE APPROVED
     =====================================
     */
 
     if (payment.status === "approved") {
-
-      console.log(
-        "PAGAMENTO APROVADO - ENVIANDO EMAILS"
-      )
 
       /*
       =====================================
@@ -252,69 +346,139 @@ export async function POST(req: Request) {
       =====================================
       */
 
-      if (customerEmail) {
+      if (
+        customerEmail &&
+        !customerEmailAlreadySent
+      ) {
 
         try {
 
-          const customerEmailResult =
-            await resend.emails.send({
+          await resend.emails.send({
 
-              from:
-                "Alúria Premium <noreply@aluriapremium.com.br>",
+            from:
+              "Alúria Premium <noreply@aluriapremium.com.br>",
 
-              to: customerEmail,
+            to:
+              customerEmail,
 
-              subject:
-                `Pedido ${orderNumber} confirmado ✨`,
+            subject:
+              `Pedido ${orderData.order_number} confirmado ✨`,
 
-              html: `
-                <div style="font-family: Arial; padding: 24px; max-width: 600px; margin: 0 auto;">
+            html: `
+              <div style="background-color:#f8f5f1;padding:40px 20px;font-family:Arial,sans-serif;">
 
-                  <h1 style="color: #111;">
-                    Pedido confirmado ✨
-                  </h1>
+                <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
 
-                  <p style="font-size: 16px; color: #444;">
-                    Seu pagamento foi aprovado com sucesso.
-                  </p>
+                  <div style="background:#111111;padding:40px 20px;text-align:center;">
 
-                  <div style="background: #f5f5f5; padding: 16px; border-radius: 12px; margin-top: 24px;">
-
-                    <p>
-                      <strong>Pedido:</strong>
-                      ${orderNumber}
-                    </p>
-
-                    <p>
-                      <strong>Total:</strong>
-                      R$ ${payment.transaction_amount}
-                    </p>
-
-                    <p>
-                      <strong>Status:</strong>
-                      Pagamento aprovado
-                    </p>
+                    <img
+                      src="https://www.aluriapremium.com.br/logo-email.png"
+                      alt="Alúria Premium"
+                      style="max-width:260px;height:auto;"
+                    />
 
                   </div>
 
-                  <p style="margin-top: 24px; color: #555;">
-                    Você receberá novas atualizações sobre envio e andamento do pedido em breve.
-                  </p>
+                  <div style="padding:48px 40px;">
 
-                  <br />
+                    <p style="font-size:14px;color:#8b7355;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">
+                      Pedido confirmado
+                    </p>
 
-                  <p style="color: #777;">
-                    Alúria Premium
-                  </p>
+                    <h1 style="font-size:36px;line-height:1.2;color:#111111;margin:0 0 24px 0;">
+                      Seu pedido foi confirmado ✨
+                    </h1>
+
+                    <p style="font-size:17px;line-height:1.8;color:#555555;margin-bottom:32px;">
+                      Recebemos seu pagamento com sucesso e sua experiência com a Alúria Premium já começou.
+                    </p>
+
+                    <div style="background:#f8f5f1;border-radius:18px;padding:28px;margin-bottom:32px;">
+
+                      <table width="100%">
+
+                        <tr>
+                          <td style="padding-bottom:16px;color:#777777;font-size:14px;">
+                            Número do pedido
+                          </td>
+
+                          <td align="right" style="padding-bottom:16px;font-size:16px;font-weight:bold;color:#111111;">
+                            ${orderData.order_number}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style="padding-bottom:16px;color:#777777;font-size:14px;">
+                            Status
+                          </td>
+
+                          <td align="right" style="padding-bottom:16px;font-size:16px;font-weight:bold;color:#2f7d32;">
+                            Pagamento aprovado
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style="color:#777777;font-size:14px;">
+                            Valor total
+                          </td>
+
+                          <td align="right" style="font-size:20px;font-weight:bold;color:#111111;">
+                            R$ ${payment.transaction_amount}
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </div>
+
+                    <div style="margin-bottom:32px;">
+
+                      <h2 style="font-size:22px;color:#111111;margin-bottom:18px;">
+                        Próximos passos
+                      </h2>
+
+                      <p style="font-size:16px;line-height:1.8;color:#555555;margin-bottom:12px;">
+                        • Seu pedido será preparado com todo cuidado.
+                      </p>
+
+                      <p style="font-size:16px;line-height:1.8;color:#555555;margin-bottom:12px;">
+                        • Você receberá atualizações sobre envio.
+                      </p>
+
+                    </div>
+
+                    <div style="padding-top:32px;border-top:1px solid #eeeeee;">
+
+                      <p style="font-size:15px;line-height:1.8;color:#666666;">
+                        Obrigado por escolher a Alúria Premium.
+                      </p>
+
+                    </div>
+
+                  </div>
 
                 </div>
-              `,
-            })
 
-          console.log(
-            "EMAIL CLIENTE ENVIADO:",
-            customerEmailResult
-          )
+              </div>
+            `,
+          })
+
+          /*
+          =====================================
+          MARCAR EMAIL CLIENTE
+          =====================================
+          */
+
+          await supabaseAdmin
+            .from("orders")
+            .update({
+              buyer_email_sent:
+                true,
+            })
+            .eq(
+              "external_reference",
+              orderId
+            )
 
         } catch (emailError) {
 
@@ -333,9 +497,12 @@ export async function POST(req: Request) {
       =====================================
       */
 
-      try {
+      if (
+        !internalEmailAlreadySent
+      ) {
 
-        const internalEmailResult =
+        try {
+
           await resend.emails.send({
 
             from:
@@ -345,25 +512,20 @@ export async function POST(req: Request) {
               "leandroroesler@gmail.com",
 
             subject:
-              `Novo pedido aprovado - ${orderNumber}`,
+              `Novo pedido aprovado - ${orderData.order_number}`,
 
             html: `
-              <div style="font-family: Arial; padding: 24px;">
+              <div style="font-family:Arial;padding:32px;">
 
                 <h1>
                   Novo pedido aprovado
                 </h1>
 
-                <div style="background: #f5f5f5; padding: 16px; border-radius: 12px;">
+                <div style="background:#f5f5f5;padding:24px;border-radius:16px;">
 
                   <p>
                     <strong>Pedido:</strong>
-                    ${orderNumber}
-                  </p>
-
-                  <p>
-                    <strong>External Reference:</strong>
-                    ${orderId}
+                    ${orderData.order_number}
                   </p>
 
                   <p>
@@ -386,32 +548,48 @@ export async function POST(req: Request) {
                     ${payment.payment_method_id}
                   </p>
 
+                  <p>
+                    <strong>Cidade:</strong>
+                    ${metadata.city}
+                  </p>
+
+                  <p>
+                    <strong>Estado:</strong>
+                    ${metadata.state}
+                  </p>
+
                 </div>
 
               </div>
             `,
           })
 
-        console.log(
-          "EMAIL INTERNO ENVIADO:",
-          internalEmailResult
-        )
+          /*
+          =====================================
+          MARCAR EMAIL INTERNO
+          =====================================
+          */
 
-      } catch (internalError) {
+          await supabaseAdmin
+            .from("orders")
+            .update({
+              email_sent: true,
+            })
+            .eq(
+              "external_reference",
+              orderId
+            )
 
-        console.log(
-          "ERRO EMAIL INTERNO:",
-          internalError
-        )
+        } catch (internalError) {
+
+          console.log(
+            "ERRO EMAIL INTERNO:",
+            internalError
+          )
+
+        }
 
       }
-
-    } else {
-
-      console.log(
-        "STATUS AINDA NÃO APPROVED:",
-        payment.status
-      )
 
     }
 
@@ -428,7 +606,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        error: "Erro webhook",
+        error:
+          "Erro webhook",
       },
       {
         status: 500,
@@ -436,4 +615,5 @@ export async function POST(req: Request) {
     )
 
   }
+
 }
