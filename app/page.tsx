@@ -109,7 +109,10 @@ export default function Home() {
             Home
           </a>
 
-          <a href="#" className="hover:opacity-70 transition">
+          <a
+            href="#colecoes"
+            className="hover:opacity-70 transition"
+          >
             Coleções
           </a>
 
@@ -162,14 +165,20 @@ export default function Home() {
           Transformando ambientes em experiências sofisticadas através de fragrâncias exclusivas e design elegante.
         </p>
 
-        <button className="mt-12 bg-[#2d2218] text-white px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] hover:opacity-90 transition">
+        <a
+          href="#colecoes"
+          className="mt-12 inline-block bg-[#2d2218] text-white px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] hover:opacity-90 transition"
+        >
           Explorar Coleção
-        </button>
+        </a>
 
       </section>
 
       {/* PRODUTOS */}
-      <section className="px-10 py-24 bg-white">
+      <section
+        id="colecoes"
+        className="px-10 py-24 bg-white"
+      >
 
         <div className="text-center mb-20">
 
@@ -209,93 +218,6 @@ export default function Home() {
 
               <button
                 onClick={() => setOpenProduct("vertiver")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
-
-            </div>
-
-          </div>
-
-          {/* PRODUTO 2 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
-
-            <img
-              src="/images/vela1broto.jpeg"
-              className="h-[400px] w-full object-cover object-center"
-            />
-
-            <div className="p-8">
-
-              <h3 className="text-3xl font-bold mb-4">
-                Broto de Bamboo
-              </h3>
-
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Fresco, leve e sofisticado. Uma fragrância verde e serena que traduz a elegância do minimalismo e a sensação de bem-estar de um refúgio contemporâneo.
-              </p>
-
-              <button
-                onClick={() => setOpenProduct("bamboo")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
-
-            </div>
-
-          </div>
-
-          {/* PRODUTO 3 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
-
-            <img
-              src="/images/vela2alecrim.jpeg"
-              className="h-[400px] w-full object-cover object-center"
-            />
-
-            <div className="p-8">
-
-              <h3 className="text-3xl font-bold mb-4">
-                Alecrim & Baunilha
-              </h3>
-
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Equilíbrio entre frescor e conforto. O toque aromático do alecrim encontra a cremosidade da baunilha em uma composição acolhedora, refinada e atemporal.
-              </p>
-
-              <button
-                onClick={() => setOpenProduct("alecrim")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
-
-            </div>
-
-          </div>
-
-          {/* PRODUTO 4 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
-
-            <img
-              src="/images/Cha_Branco_Roma.PNG"
-              className="h-[400px] w-full object-cover object-center"
-            />
-
-            <div className="p-8">
-
-              <h3 className="text-3xl font-bold mb-4">
-                Chá Branco & Romã
-              </h3>
-
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã.
-              </p>
-
-              <button
-                onClick={() => setOpenProduct("chaBrancoRoma")}
                 className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
               >
                 Ver Produto
