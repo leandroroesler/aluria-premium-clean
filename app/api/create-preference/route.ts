@@ -198,22 +198,36 @@ export async function POST(
         */
 
         zip_code:
-          customer?.zipCode || "",
+          customer?.zipCode ||
+          customer?.zipcode ||
+          customer?.cep ||
+          "",
 
         street:
-          customer?.street || "",
+          customer?.street ||
+          customer?.address ||
+          "",
 
         number:
-          customer?.number || "",
+          customer?.number ||
+          "",
 
         neighborhood:
-          customer?.neighborhood || "",
+          customer?.neighborhood ||
+          customer?.district ||
+          "",
 
         city:
-          customer?.city || "",
+          customer?.city ||
+          "",
 
         state:
-          customer?.state || "",
+          customer?.state ||
+          "",
+
+        complement:
+          customer?.complement ||
+          "",
 
         /*
         =====================================

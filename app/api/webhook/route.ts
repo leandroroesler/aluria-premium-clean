@@ -240,6 +240,9 @@ export async function POST(req: Request) {
       number:
         metadata.number || "",
 
+      complement:
+        metadata.complement || "",
+
       neighborhood:
         metadata.neighborhood || "",
 
@@ -331,8 +334,6 @@ export async function POST(req: Request) {
 
                 <div style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
 
-                  <!-- HEADER -->
-
                   <div style="background:#f8f5f1;padding:40px 24px 24px 24px;text-align:center;border-bottom:1px solid #ece7df;">
 
                     <img
@@ -350,8 +351,6 @@ export async function POST(req: Request) {
 
                   </div>
 
-                  <!-- BODY -->
-
                   <div style="padding:48px 40px;">
 
                     <p style="font-size:13px;letter-spacing:3px;color:#8d7355;text-transform:uppercase;margin-bottom:16px;">
@@ -365,8 +364,6 @@ export async function POST(req: Request) {
                     <p style="font-size:18px;line-height:1.8;color:#555555;margin-bottom:36px;">
                       Recebemos seu pagamento com sucesso e sua experiência com a Alúria Premium já começou.
                     </p>
-
-                    <!-- RESUMO -->
 
                     <div style="background:#f8f5f1;border-radius:20px;padding:28px;margin-bottom:32px;">
 
@@ -406,8 +403,6 @@ export async function POST(req: Request) {
 
                     </div>
 
-                    <!-- PRODUTOS -->
-
                     <div style="margin-bottom:40px;">
 
                       <h2 style="font-size:24px;color:#111;margin-bottom:24px;">
@@ -446,8 +441,6 @@ export async function POST(req: Request) {
 
                     </div>
 
-                    <!-- ENTREGA -->
-
                     <div style="margin-bottom:40px;">
 
                       <h2 style="font-size:24px;color:#111;margin-bottom:20px;">
@@ -462,8 +455,12 @@ export async function POST(req: Request) {
 
                         <br />
 
-                        ${metadata.street || ""}
+                        ${metadata.street || ""},
                         ${metadata.number || ""}
+
+                        ${metadata.complement
+                          ? `<br />${metadata.complement}`
+                          : ""}
 
                         <br />
 
@@ -487,8 +484,6 @@ export async function POST(req: Request) {
 
                     </div>
 
-                    <!-- RODAPÉ -->
-
                     <div style="padding-top:32px;border-top:1px solid #eeeeee;">
 
                       <p style="font-size:16px;line-height:1.8;color:#666666;">
@@ -508,12 +503,6 @@ export async function POST(req: Request) {
               </div>
             `,
           })
-
-          /*
-          =====================================
-          MARCAR EMAIL CLIENTE
-          =====================================
-          */
 
           await supabaseAdmin
             .from("orders")
@@ -612,8 +601,12 @@ export async function POST(req: Request) {
 
                   <div style="background:#f8f5f1;padding:24px;border-radius:18px;margin-bottom:32px;line-height:1.9;">
 
-                    ${metadata.street || ""}
+                    ${metadata.street || ""},
                     ${metadata.number || ""}
+
+                    ${metadata.complement
+                      ? `<br />${metadata.complement}`
+                      : ""}
 
                     <br />
 
@@ -669,12 +662,6 @@ export async function POST(req: Request) {
               </div>
             `,
           })
-
-          /*
-          =====================================
-          MARCAR EMAIL INTERNO
-          =====================================
-          */
 
           await supabaseAdmin
             .from("orders")
