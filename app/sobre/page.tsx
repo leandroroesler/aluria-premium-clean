@@ -16,25 +16,25 @@ export default function SobrePage() {
             Criamos experiências sensoriais sofisticadas.
           </h1>
 
-          <div className="space-y-10 text-justify text-lg leading-loose text-neutral-700">
+          <div className="space-y-10 text-lg leading-loose text-neutral-700">
 
-            <p>
+            <p className="text-justify">
               Na Aluria Premium, acreditamos que ambientes sofisticados
               são construídos através dos detalhes.
             </p>
 
-            <p>
+            <p className="text-justify">
               Criamos velas aromáticas artesanais que unem elegância,
               identidade e experiência sensorial em cada composição.
             </p>
 
-            <p>
+            <p className="text-justify">
               Cada peça é produzida manualmente, utilizando matérias-primas
               selecionadas, aromas refinados e acabamento cuidadoso para
               transformar espaços em experiências acolhedoras e sofisticadas.
             </p>
 
-            <p>
+            <p className="text-justify">
               Mais do que fragrâncias, desenvolvemos atmosferas que despertam
               sensações, memórias e bem-estar.
             </p>
