@@ -89,6 +89,33 @@ export async function POST(
 
     /*
     =====================================
+    CALCULAR SUBTOTAL
+    =====================================
+    */
+
+    const subtotal =
+      items.reduce(
+        (
+          total: number,
+          item: any
+        ) => {
+
+          return (
+            total +
+            Number(
+              item.unit_price
+            ) *
+            Number(
+              item.quantity
+            )
+          )
+
+        },
+        0
+      )
+
+    /*
+    =====================================
     PREFERENCE DATA
     =====================================
     */
@@ -135,10 +162,69 @@ export async function POST(
 
       },
 
+      /*
+      =====================================
+      METADATA COMPLETA
+      =====================================
+      */
+
       metadata: {
 
+        /*
+        =====================================
+        CLIENTE
+        =====================================
+        */
+
+        first_name:
+          customer?.firstName || "",
+
+        last_name:
+          customer?.lastName || "",
+
         email:
-          customer?.email,
+          customer?.email || "",
+
+        phone:
+          customer?.phone || "",
+
+        cpf:
+          customer?.cpf || "",
+
+        /*
+        =====================================
+        ENDEREÇO
+        =====================================
+        */
+
+        zip_code:
+          customer?.zipCode || "",
+
+        street:
+          customer?.street || "",
+
+        number:
+          customer?.number || "",
+
+        neighborhood:
+          customer?.neighborhood || "",
+
+        city:
+          customer?.city || "",
+
+        state:
+          customer?.state || "",
+
+        /*
+        =====================================
+        PEDIDO
+        =====================================
+        */
+
+        items:
+          JSON.stringify(items),
+
+        subtotal,
 
       },
 
