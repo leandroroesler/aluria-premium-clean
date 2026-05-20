@@ -125,7 +125,46 @@ export async function POST(req: Request) {
       payment.payer?.email ||
       ""
 
+    /*
+    =====================================
+    GERAR ORDER NUMBER
+    =====================================
+    */
+
+    const { count, error: countError } =
+      await supabaseAdmin
+        .from("orders")
+        .select("*", {
+          count: "exact",
+          head: true,
+        })
+
+    if (countError) {
+
+      console.log(
+        "ERRO CONTAGEM PEDIDOS:",
+        countError
+      )
+
+    }
+
+    const orderNumber =
+      `ALR-${1001 + (count || 0)}`
+
+    console.log(
+      "ORDER NUMBER:",
+      orderNumber
+    )
+
+    /*
+    =====================================
+    DADOS PEDIDO
+    =====================================
+    */
+
     const orderData = {
+
+      order_number: orderNumber,
 
       external_reference: orderId,
 
@@ -133,12 +172,30 @@ export async function POST(req: Request) {
 
       status: payment.status,
 
+      payment_status: payment.status,
+
       total:
         payment.transaction_amount || 0,
+
+      subtotal:
+        payment.transaction_amount || 0,
+
+      transaction_amount:
+        payment.transaction_amount || 0,
+
+      shipping_cost: 0,
+
+      payment_method:
+        payment.payment_method_id || "",
 
       customer_name: customerName,
 
       customer_email: customerEmail,
+
+      paid_at:
+        payment.status === "approved"
+          ? new Date().toISOString()
+          : null,
 
     }
 
@@ -208,31 +265,45 @@ export async function POST(req: Request) {
               to: customerEmail,
 
               subject:
-                "Pedido confirmado - Alúria Premium",
+                `Pedido ${orderNumber} confirmado ✨`,
 
               html: `
-                <div style="font-family: Arial; padding: 24px;">
+                <div style="font-family: Arial; padding: 24px; max-width: 600px; margin: 0 auto;">
 
-                  <h1>
+                  <h1 style="color: #111;">
                     Pedido confirmado ✨
                   </h1>
 
-                  <p>
+                  <p style="font-size: 16px; color: #444;">
                     Seu pagamento foi aprovado com sucesso.
                   </p>
 
-                  <p>
-                    <strong>Pedido:</strong>
-                    ${orderId}
-                  </p>
+                  <div style="background: #f5f5f5; padding: 16px; border-radius: 12px; margin-top: 24px;">
 
-                  <p>
-                    Você receberá novas atualizações em breve.
+                    <p>
+                      <strong>Pedido:</strong>
+                      ${orderNumber}
+                    </p>
+
+                    <p>
+                      <strong>Total:</strong>
+                      R$ ${payment.transaction_amount}
+                    </p>
+
+                    <p>
+                      <strong>Status:</strong>
+                      Pagamento aprovado
+                    </p>
+
+                  </div>
+
+                  <p style="margin-top: 24px; color: #555;">
+                    Você receberá novas atualizações sobre envio e andamento do pedido em breve.
                   </p>
 
                   <br />
 
-                  <p>
+                  <p style="color: #777;">
                     Alúria Premium
                   </p>
 
@@ -274,7 +345,7 @@ export async function POST(req: Request) {
               "leandroroesler@gmail.com",
 
             subject:
-              "Novo pedido aprovado",
+              `Novo pedido aprovado - ${orderNumber}`,
 
             html: `
               <div style="font-family: Arial; padding: 24px;">
@@ -283,25 +354,39 @@ export async function POST(req: Request) {
                   Novo pedido aprovado
                 </h1>
 
-                <p>
-                  <strong>Pedido:</strong>
-                  ${orderId}
-                </p>
+                <div style="background: #f5f5f5; padding: 16px; border-radius: 12px;">
 
-                <p>
-                  <strong>Cliente:</strong>
-                  ${customerName}
-                </p>
+                  <p>
+                    <strong>Pedido:</strong>
+                    ${orderNumber}
+                  </p>
 
-                <p>
-                  <strong>Email:</strong>
-                  ${customerEmail}
-                </p>
+                  <p>
+                    <strong>External Reference:</strong>
+                    ${orderId}
+                  </p>
 
-                <p>
-                  <strong>Total:</strong>
-                  R$ ${payment.transaction_amount}
-                </p>
+                  <p>
+                    <strong>Cliente:</strong>
+                    ${customerName}
+                  </p>
+
+                  <p>
+                    <strong>Email:</strong>
+                    ${customerEmail}
+                  </p>
+
+                  <p>
+                    <strong>Total:</strong>
+                    R$ ${payment.transaction_amount}
+                  </p>
+
+                  <p>
+                    <strong>Método:</strong>
+                    ${payment.payment_method_id}
+                  </p>
+
+                </div>
 
               </div>
             `,
