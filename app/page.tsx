@@ -18,7 +18,7 @@ export default function Home() {
 
     vertiver: {
       title: "Vertiver & Lírio",
-      price: 1.00,
+      price: 39.90,
       description:
         "Profundo, elegante e acolhedor. A união das notas terrosas do vetiver com a delicadeza do lírio cria uma atmosfera sofisticada, suave e envolvente.",
       notes:
