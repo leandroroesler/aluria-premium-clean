@@ -25,10 +25,6 @@ export async function POST(req: Request) {
 
     if (!paymentId) {
 
-      console.log(
-        "PAYMENT ID NÃO ENCONTRADO"
-      )
-
       return NextResponse.json({
         ok: true,
       })
@@ -37,69 +33,24 @@ export async function POST(req: Request) {
 
     /*
     =====================================
-    CONSULTAR PAGAMENTO MP
+    CONSULTA PAGAMENTO MP
     =====================================
     */
 
-    let payment
+    const payment =
+      await new Payment(client).get({
+        id: paymentId,
+      })
 
-    try {
-
-      payment =
-        await new Payment(client).get({
-          id: paymentId,
-        })
-
-      console.log(
-        "PAGAMENTO MP:",
-        JSON.stringify(payment, null, 2)
-      )
-
-    } catch (mpError) {
-
-      console.log(
-        "ERRO CONSULTA MP:",
-        mpError
-      )
+    if (
+      !payment ||
+      !payment.external_reference
+    ) {
 
       return NextResponse.json(
         {
           error:
-            "Erro consulta pagamento",
-        },
-        {
-          status: 500,
-        }
-      )
-
-    }
-
-    if (!payment) {
-
-      return NextResponse.json(
-        {
-          error:
-            "Pagamento inexistente",
-        },
-        {
-          status: 500,
-        }
-      )
-
-    }
-
-    /*
-    =====================================
-    VALIDAR EXTERNAL REFERENCE
-    =====================================
-    */
-
-    if (!payment.external_reference) {
-
-      return NextResponse.json(
-        {
-          error:
-            "external_reference ausente",
+            "Pagamento inválido",
         },
         {
           status: 500,
@@ -111,14 +62,9 @@ export async function POST(req: Request) {
     const orderId =
       payment.external_reference
 
-    console.log(
-      "ORDER ID:",
-      orderId
-    )
-
     /*
     =====================================
-    METADATA COMPLETA
+    METADATA
     =====================================
     */
 
@@ -129,63 +75,13 @@ export async function POST(req: Request) {
       ${metadata.first_name || ""}
       ${metadata.last_name || ""}
     `
+      .replace(/\s+/g, " ")
       .trim()
 
     const customerEmail =
       metadata.email ||
       payment.payer?.email ||
       ""
-
-    /*
-    =====================================
-    GERAR ORDER NUMBER
-    =====================================
-    */
-
-    const { count } =
-      await supabaseAdmin
-        .from("orders")
-        .select("*", {
-          count: "exact",
-          head: true,
-        })
-
-    const orderNumber =
-      `ALR-${1001 + (count || 0)}`
-
-    console.log(
-      "ORDER NUMBER:",
-      orderNumber
-    )
-
-    /*
-    =====================================
-    BUSCAR PEDIDO EXISTENTE
-    =====================================
-    */
-
-    const {
-      data: existingOrder,
-    } = await supabaseAdmin
-      .from("orders")
-      .select("*")
-      .eq(
-        "external_reference",
-        orderId
-      )
-      .maybeSingle()
-
-    /*
-    =====================================
-    EVITAR DUPLICIDADE
-    =====================================
-    */
-
-    const customerEmailAlreadySent =
-      existingOrder?.buyer_email_sent
-
-    const internalEmailAlreadySent =
-      existingOrder?.email_sent
 
     /*
     =====================================
@@ -212,7 +108,80 @@ export async function POST(req: Request) {
 
     /*
     =====================================
-    DADOS PEDIDO
+    HTML ITEMS CLIENTE
+    =====================================
+    */
+
+    const itemsHtml =
+      parsedItems
+        .map(
+          (item: any) => `
+            <tr>
+              <td style="padding:12px 0;border-bottom:1px solid #eee;">
+                ${item.title}
+              </td>
+
+              <td align="center" style="padding:12px 0;border-bottom:1px solid #eee;">
+                ${item.quantity}
+              </td>
+
+              <td align="right" style="padding:12px 0;border-bottom:1px solid #eee;">
+                R$ ${item.unit_price}
+              </td>
+            </tr>
+          `
+        )
+        .join("")
+
+    /*
+    =====================================
+    GERAR ORDER NUMBER
+    =====================================
+    */
+
+    const { count } =
+      await supabaseAdmin
+        .from("orders")
+        .select("*", {
+          count: "exact",
+          head: true,
+        })
+
+    const orderNumber =
+      `ALR-${1001 + (count || 0)}`
+
+    /*
+    =====================================
+    PEDIDO EXISTENTE
+    =====================================
+    */
+
+    const {
+      data: existingOrder,
+    } = await supabaseAdmin
+      .from("orders")
+      .select("*")
+      .eq(
+        "external_reference",
+        orderId
+      )
+      .maybeSingle()
+
+    /*
+    =====================================
+    CONTROLE DUPLICIDADE
+    =====================================
+    */
+
+    const customerEmailAlreadySent =
+      existingOrder?.buyer_email_sent
+
+    const internalEmailAlreadySent =
+      existingOrder?.email_sent
+
+    /*
+    =====================================
+    ORDER DATA
     =====================================
     */
 
@@ -290,14 +259,9 @@ export async function POST(req: Request) {
 
     }
 
-    console.log(
-      "SALVANDO PEDIDO:",
-      JSON.stringify(orderData, null, 2)
-    )
-
     /*
     =====================================
-    UPSERT SUPABASE
+    UPSERT
     =====================================
     */
 
@@ -328,17 +292,15 @@ export async function POST(req: Request) {
 
     }
 
-    console.log(
-      "PEDIDO SALVO COM SUCESSO"
-    )
-
     /*
     =====================================
-    EMAILS SOMENTE APPROVED
+    SOMENTE APPROVED
     =====================================
     */
 
-    if (payment.status === "approved") {
+    if (
+      payment.status === "approved"
+    ) {
 
       /*
       =====================================
@@ -365,64 +327,70 @@ export async function POST(req: Request) {
               `Pedido ${orderData.order_number} confirmado ✨`,
 
             html: `
-              <div style="background-color:#f8f5f1;padding:40px 20px;font-family:Arial,sans-serif;">
+              <div style="background:#f7f3ee;padding:40px 20px;font-family:Arial,sans-serif;">
 
-                <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+                <div style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
 
-                  <div style="background:#111111;padding:40px 20px;text-align:center;">
+                  <!-- HEADER -->
+
+                  <div style="background:#111111;padding:48px 24px;text-align:center;">
 
                     <img
                       src="https://www.aluriapremium.com.br/logo-email.png"
                       alt="Alúria Premium"
-                      style="max-width:260px;height:auto;"
+                      style="width:220px;max-width:100%;"
                     />
 
                   </div>
 
+                  <!-- BODY -->
+
                   <div style="padding:48px 40px;">
 
-                    <p style="font-size:14px;color:#8b7355;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">
+                    <p style="font-size:13px;letter-spacing:3px;color:#8d7355;text-transform:uppercase;margin-bottom:16px;">
                       Pedido confirmado
                     </p>
 
-                    <h1 style="font-size:36px;line-height:1.2;color:#111111;margin:0 0 24px 0;">
+                    <h1 style="font-size:42px;line-height:1.2;color:#111111;margin:0 0 24px 0;">
                       Seu pedido foi confirmado ✨
                     </h1>
 
-                    <p style="font-size:17px;line-height:1.8;color:#555555;margin-bottom:32px;">
+                    <p style="font-size:18px;line-height:1.8;color:#555555;margin-bottom:36px;">
                       Recebemos seu pagamento com sucesso e sua experiência com a Alúria Premium já começou.
                     </p>
 
-                    <div style="background:#f8f5f1;border-radius:18px;padding:28px;margin-bottom:32px;">
+                    <!-- RESUMO -->
+
+                    <div style="background:#f8f5f1;border-radius:20px;padding:28px;margin-bottom:32px;">
 
                       <table width="100%">
 
                         <tr>
-                          <td style="padding-bottom:16px;color:#777777;font-size:14px;">
-                            Número do pedido
+                          <td style="padding-bottom:18px;color:#777;">
+                            Pedido
                           </td>
 
-                          <td align="right" style="padding-bottom:16px;font-size:16px;font-weight:bold;color:#111111;">
+                          <td align="right" style="padding-bottom:18px;font-weight:bold;color:#111;">
                             ${orderData.order_number}
                           </td>
                         </tr>
 
                         <tr>
-                          <td style="padding-bottom:16px;color:#777777;font-size:14px;">
+                          <td style="padding-bottom:18px;color:#777;">
                             Status
                           </td>
 
-                          <td align="right" style="padding-bottom:16px;font-size:16px;font-weight:bold;color:#2f7d32;">
+                          <td align="right" style="padding-bottom:18px;font-weight:bold;color:#2f7d32;">
                             Pagamento aprovado
                           </td>
                         </tr>
 
                         <tr>
-                          <td style="color:#777777;font-size:14px;">
+                          <td style="color:#777;">
                             Valor total
                           </td>
 
-                          <td align="right" style="font-size:20px;font-weight:bold;color:#111111;">
+                          <td align="right" style="font-size:24px;font-weight:bold;color:#111;">
                             R$ ${payment.transaction_amount}
                           </td>
                         </tr>
@@ -431,26 +399,97 @@ export async function POST(req: Request) {
 
                     </div>
 
-                    <div style="margin-bottom:32px;">
+                    <!-- PRODUTOS -->
 
-                      <h2 style="font-size:22px;color:#111111;margin-bottom:18px;">
-                        Próximos passos
+                    <div style="margin-bottom:40px;">
+
+                      <h2 style="font-size:24px;color:#111;margin-bottom:24px;">
+                        Itens do pedido
                       </h2>
 
-                      <p style="font-size:16px;line-height:1.8;color:#555555;margin-bottom:12px;">
-                        • Seu pedido será preparado com todo cuidado.
-                      </p>
+                      <table width="100%" cellpadding="0" cellspacing="0">
 
-                      <p style="font-size:16px;line-height:1.8;color:#555555;margin-bottom:12px;">
-                        • Você receberá atualizações sobre envio.
-                      </p>
+                        <thead>
+
+                          <tr>
+
+                            <th align="left" style="padding-bottom:14px;color:#777;font-size:14px;">
+                              Produto
+                            </th>
+
+                            <th align="center" style="padding-bottom:14px;color:#777;font-size:14px;">
+                              Qtde
+                            </th>
+
+                            <th align="right" style="padding-bottom:14px;color:#777;font-size:14px;">
+                              Valor
+                            </th>
+
+                          </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                          ${itemsHtml}
+
+                        </tbody>
+
+                      </table>
 
                     </div>
 
+                    <!-- ENTREGA -->
+
+                    <div style="margin-bottom:40px;">
+
+                      <h2 style="font-size:24px;color:#111;margin-bottom:20px;">
+                        Dados para entrega
+                      </h2>
+
+                      <div style="background:#f8f5f1;border-radius:18px;padding:24px;line-height:1.9;color:#555;">
+
+                        <strong style="color:#111;">
+                          ${customerName}
+                        </strong>
+
+                        <br />
+
+                        ${metadata.street || ""}
+                        ${metadata.number || ""}
+
+                        <br />
+
+                        ${metadata.neighborhood || ""}
+
+                        <br />
+
+                        ${metadata.city || ""} - ${metadata.state || ""}
+
+                        <br />
+
+                        CEP:
+                        ${metadata.zip_code || ""}
+
+                        <br /><br />
+
+                        Telefone:
+                        ${metadata.phone || ""}
+
+                      </div>
+
+                    </div>
+
+                    <!-- RODAPÉ -->
+
                     <div style="padding-top:32px;border-top:1px solid #eeeeee;">
 
-                      <p style="font-size:15px;line-height:1.8;color:#666666;">
-                        Obrigado por escolher a Alúria Premium.
+                      <p style="font-size:16px;line-height:1.8;color:#666666;">
+                        Você receberá novas atualizações sobre o andamento e envio do seu pedido.
+                      </p>
+
+                      <p style="font-size:16px;line-height:1.8;color:#666666;">
+                        Obrigado por escolher a Alúria Premium ✨
                       </p>
 
                     </div>
@@ -515,48 +554,108 @@ export async function POST(req: Request) {
               `Novo pedido aprovado - ${orderData.order_number}`,
 
             html: `
-              <div style="font-family:Arial;padding:32px;">
+              <div style="font-family:Arial;padding:40px;background:#f5f5f5;">
 
-                <h1>
-                  Novo pedido aprovado
-                </h1>
+                <div style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:24px;padding:40px;">
 
-                <div style="background:#f5f5f5;padding:24px;border-radius:16px;">
+                  <h1 style="margin-top:0;">
+                    Novo pedido aprovado
+                  </h1>
 
-                  <p>
+                  <div style="background:#f8f5f1;padding:24px;border-radius:18px;margin-bottom:32px;line-height:1.9;">
+
                     <strong>Pedido:</strong>
                     ${orderData.order_number}
-                  </p>
 
-                  <p>
+                    <br />
+
                     <strong>Cliente:</strong>
                     ${customerName}
-                  </p>
 
-                  <p>
+                    <br />
+
                     <strong>Email:</strong>
                     ${customerEmail}
-                  </p>
 
-                  <p>
+                    <br />
+
+                    <strong>Telefone:</strong>
+                    ${metadata.phone || ""}
+
+                    <br />
+
+                    <strong>CPF:</strong>
+                    ${metadata.cpf || ""}
+
+                    <br />
+
                     <strong>Total:</strong>
                     R$ ${payment.transaction_amount}
-                  </p>
 
-                  <p>
+                    <br />
+
                     <strong>Método:</strong>
                     ${payment.payment_method_id}
-                  </p>
 
-                  <p>
-                    <strong>Cidade:</strong>
-                    ${metadata.city}
-                  </p>
+                  </div>
 
-                  <p>
-                    <strong>Estado:</strong>
-                    ${metadata.state}
-                  </p>
+                  <h2>
+                    Endereço
+                  </h2>
+
+                  <div style="background:#f8f5f1;padding:24px;border-radius:18px;margin-bottom:32px;line-height:1.9;">
+
+                    ${metadata.street || ""}
+                    ${metadata.number || ""}
+
+                    <br />
+
+                    ${metadata.neighborhood || ""}
+
+                    <br />
+
+                    ${metadata.city || ""} - ${metadata.state || ""}
+
+                    <br />
+
+                    CEP:
+                    ${metadata.zip_code || ""}
+
+                  </div>
+
+                  <h2>
+                    Produtos
+                  </h2>
+
+                  <table width="100%" cellpadding="0" cellspacing="0">
+
+                    <thead>
+
+                      <tr>
+
+                        <th align="left" style="padding-bottom:14px;">
+                          Produto
+                        </th>
+
+                        <th align="center" style="padding-bottom:14px;">
+                          Qtde
+                        </th>
+
+                        <th align="right" style="padding-bottom:14px;">
+                          Valor
+                        </th>
+
+                      </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                      ${itemsHtml}
+
+                    </tbody>
+
+                  </table>
 
                 </div>
 
