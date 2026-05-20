@@ -188,20 +188,29 @@ export default function Checkout() {
         data
       )
 
-      if (
-        data.init_point &&
-        data.order_id
-      ) {
+      // CORREÇÃO DEFINITIVA
+      if (data.init_point) {
 
+        // salva id do pedido
         localStorage.setItem(
           "aluria-order-id",
-          data.order_id
+          data.id || ""
+        )
+
+        console.log(
+          "REDIRECT CHECKOUT:",
+          data.init_point
         )
 
         window.location.href =
           data.init_point
 
       } else {
+
+        console.log(
+          "ERRO CREATE PREFERENCE:",
+          data
+        )
 
         alert(
           "Erro ao gerar pagamento"
@@ -211,7 +220,10 @@ export default function Checkout() {
 
     } catch (error) {
 
-      console.log(error)
+      console.log(
+        "ERRO FINALIZAR PAGAMENTO:",
+        error
+      )
 
       alert(
         "Erro ao finalizar pagamento"
