@@ -108,7 +108,7 @@ export async function POST(req: Request) {
 
     /*
     =====================================
-    HTML ITEMS CLIENTE
+    HTML ITEMS
     =====================================
     */
 
@@ -117,15 +117,15 @@ export async function POST(req: Request) {
         .map(
           (item: any) => `
             <tr>
-              <td style="padding:12px 0;border-bottom:1px solid #eee;">
+              <td style="padding:14px 0;border-bottom:1px solid #eee;color:#333;">
                 ${item.title}
               </td>
 
-              <td align="center" style="padding:12px 0;border-bottom:1px solid #eee;">
+              <td align="center" style="padding:14px 0;border-bottom:1px solid #eee;color:#333;">
                 ${item.quantity}
               </td>
 
-              <td align="right" style="padding:12px 0;border-bottom:1px solid #eee;">
+              <td align="right" style="padding:14px 0;border-bottom:1px solid #eee;color:#333;">
                 R$ ${item.unit_price}
               </td>
             </tr>
@@ -333,12 +333,19 @@ export async function POST(req: Request) {
 
                   <!-- HEADER -->
 
-                  <div style="background:#111111;padding:48px 24px;text-align:center;">
+                  <div style="background:#f8f5f1;padding:40px 24px 24px 24px;text-align:center;border-bottom:1px solid #ece7df;">
 
                     <img
                       src="https://www.aluriapremium.com.br/logo-email.png"
                       alt="Alúria Premium"
-                      style="width:220px;max-width:100%;"
+                      style="
+                        width:280px;
+                        max-width:100%;
+                        height:auto;
+                        display:block;
+                        margin:0 auto;
+                        object-fit:contain;
+                      "
                     />
 
                   </div>
