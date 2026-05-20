@@ -151,7 +151,15 @@ export default function Checkout() {
 
     try {
 
+      /*
+      =====================================
+      ITENS
+      =====================================
+      */
+
       const items = cart.map(item => ({
+
+        id: item.id,
 
         title: item.title,
 
@@ -163,18 +171,44 @@ export default function Checkout() {
 
       }))
 
+      /*
+      =====================================
+      EXTERNAL REFERENCE
+      =====================================
+      */
+
+      const externalReference =
+        crypto.randomUUID()
+
+      console.log(
+        "EXTERNAL REFERENCE:",
+        externalReference
+      )
+
+      /*
+      =====================================
+      CREATE PREFERENCE
+      =====================================
+      */
+
       const response = await fetch(
         "/api/create-preference",
         {
           method: "POST",
+
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
+
           body: JSON.stringify({
 
             items,
 
             customer: checkoutData,
+
+            external_reference:
+              externalReference,
 
           }),
         }
@@ -188,13 +222,17 @@ export default function Checkout() {
         data
       )
 
-      // CORREÇÃO DEFINITIVA
+      /*
+      =====================================
+      REDIRECT MP
+      =====================================
+      */
+
       if (data.init_point) {
 
-        // salva id do pedido
         localStorage.setItem(
           "aluria-order-id",
-          data.id || ""
+          externalReference
         )
 
         console.log(
