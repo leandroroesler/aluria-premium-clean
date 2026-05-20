@@ -3,6 +3,7 @@
 import { useCart } from "../context/CartContext";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -112,13 +113,19 @@ export default function Home() {
             Coleções
           </a>
 
-          <a href="#" className="hover:opacity-70 transition">
+          <Link
+            href="/sobre"
+            className="hover:opacity-70 transition"
+          >
             Sobre
-          </a>
+          </Link>
 
-          <a href="/contato" className="hover:opacity-70 transition">
+          <Link
+            href="/contato"
+            className="hover:opacity-70 transition"
+          >
             Contato
-          </a>
+          </Link>
 
         </nav>
 
@@ -301,132 +308,6 @@ export default function Home() {
         </div>
 
       </section>
-
-      {/* MODAL PRODUTO */}
-      {
-        openProduct !== "" && product && (
-
-          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-6">
-
-            <div className="bg-white max-w-3xl w-full rounded-[30px] p-8 relative max-h-[85vh] overflow-y-auto">
-
-              <button
-                onClick={() => setOpenProduct("")}
-                className="absolute top-6 right-6 text-3xl"
-              >
-                ×
-              </button>
-
-              <img
-                src={product?.image}
-                className="w-full h-[320px] object-cover object-center rounded-[20px] mb-8"
-              />
-
-              <h2 className="text-4xl font-bold mb-6">
-                {product?.title}
-              </h2>
-
-              <p className="text-[#6b5a4d] leading-7 text-base mb-8 text-justify">
-                {product?.description}
-              </p>
-
-              <div className="space-y-4 text-[#6b5a4d] text-base">
-
-                <p>
-                  <strong>Notas:</strong> {product?.notes}
-                </p>
-
-                <p>
-                  <strong>Duração:</strong> {product?.duration}
-                </p>
-
-                <p>
-                  <strong>Peso:</strong> {product?.weight}
-                </p>
-
-                <p>
-                  <strong>Ambiente ideal:</strong> {product?.environment}
-                </p>
-
-              </div>
-
-              <div className="mt-10">
-
-                <button
-                  onClick={() => {
-
-                    addToCart({
-                      id: openProduct,
-                      title: product?.title || "",
-                      price: product?.price || 0,
-                      image: product?.image || "",
-                      quantity: 1,
-                    });
-
-                    setOpenProduct("");
-                    setCartSuccessOpen(true);
-
-                  }}
-                  className="bg-[#2d2218] text-white px-8 py-4 rounded-full uppercase tracking-[0.2em] hover:opacity-90 transition"
-                >
-                  Adicionar ao Carrinho
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        )
-      }
-
-      {/* MODAL SUCESSO */}
-      {
-        cartSuccessOpen && (
-
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] px-6">
-
-            <div className="bg-white max-w-md w-full rounded-[30px] p-10 text-center">
-
-              <div className="w-20 h-20 rounded-full bg-[#2d2218] text-white flex items-center justify-center text-4xl mx-auto mb-8">
-                ✓
-              </div>
-
-              <h2 className="text-3xl font-bold mb-5">
-                Produto adicionado
-              </h2>
-
-              <p className="text-[#6b5a4d] text-lg leading-relaxed mb-10">
-                Seu produto foi adicionado ao carrinho com sucesso.
-              </p>
-
-              <div className="flex flex-col gap-4">
-
-                <button
-                  onClick={() =>
-                    setCartSuccessOpen(false)
-                  }
-                  className="border border-[#2d2218] py-4 rounded-full uppercase tracking-[0.2em] hover:bg-[#2d2218] hover:text-white transition"
-                >
-                  Adicionar mais itens
-                </button>
-
-                <a
-                  href="/carrinho"
-                  className="bg-[#2d2218] text-white py-4 rounded-full uppercase tracking-[0.2em] hover:opacity-90 transition text-center"
-                >
-                  Ir para carrinho
-                </a>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        )
-      }
 
     </main>
 
