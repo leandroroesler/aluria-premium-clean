@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Home() {
 
-  const { addToCart, totalItems } = useCart();
+  const { totalItems } = useCart();
 
   const [openProduct, setOpenProduct] = useState("");
 
@@ -18,12 +18,6 @@ export default function Home() {
       price: 39.90,
       description:
         "Profundo, elegante e acolhedor. A união das notas terrosas do vetiver com a delicadeza do lírio cria uma atmosfera sofisticada, suave e envolvente.",
-      notes:
-        "Saída: cítricos suaves e folhas verdes. Corpo: lírio branco e nuances florais delicadas. Fundo: vetiver, musk e madeiras nobres.",
-      duration: "20 a 25 horas de queima",
-      weight: "100g",
-      environment:
-        "Salas de estar, quartos, halls e ambientes sofisticados com atmosfera aconchegante e elegante.",
       image: "/images/vela3vertiver.jpeg",
     },
 
@@ -32,12 +26,6 @@ export default function Home() {
       price: 39.90,
       description:
         "Fresco, leve e sofisticado. Uma fragrância verde e serena que traduz a elegância do minimalismo e a sensação de bem-estar de um refúgio contemporâneo.",
-      notes:
-        "Saída: folhas verdes, bamboo fresco e bergamota. Corpo: chá branco e notas aquáticas suaves. Fundo: musk branco e madeiras leves.",
-      duration: "20 a 25 horas de queima",
-      weight: "100g",
-      environment:
-        "Lavabos, salas, escritórios, quartos e ambientes minimalistas que buscam frescor e sofisticação.",
       image: "/images/vela1broto.jpeg",
     },
 
@@ -46,12 +34,6 @@ export default function Home() {
       price: 39.90,
       description:
         "Equilíbrio entre frescor e conforto. O toque aromático do alecrim encontra a cremosidade da baunilha em uma composição acolhedora, refinada e atemporal.",
-      notes:
-        "Saída: alecrim fresco e notas verdes aromáticas. Corpo: lavanda suave e ervas delicadas. Fundo: baunilha cremosa, musk e âmbar leve.",
-      duration: "20 a 25 horas de queima",
-      weight: "100g",
-      environment:
-        "Quartos, salas de leitura, espaços de relaxamento e ambientes que pedem aconchego e tranquilidade.",
       image: "/images/vela2alecrim.jpeg",
     },
 
@@ -60,21 +42,10 @@ export default function Home() {
       price: 39.90,
       description:
         "Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã.",
-      notes:
-        "Saída: romã fresca e acordes cítricos suaves. Corpo: chá branco e flores delicadas. Fundo: almíscar branco e madeiras suaves.",
-      duration: "20 a 25 horas de queima",
-      weight: "100g",
-      environment:
-        "Quartos, salas, lavabos, escritórios e ambientes sofisticados.",
       image: "/images/Cha_Branco_Roma.PNG",
     },
 
   };
-
-  const product =
-    products[
-      openProduct as keyof typeof products
-    ] || null;
 
   return (
 
@@ -381,7 +352,7 @@ export default function Home() {
       </section>
 
       {/* BANNER EMOCIONAL */}
-      <section className="relative h-[600px] overflow-hidden">
+      <section className="relative h-[520px] overflow-hidden">
 
         <img
           src="/images/vela2alecrim.jpeg"
@@ -397,13 +368,13 @@ export default function Home() {
             Alúria Premium
           </p>
 
-          <h2 className="mb-8 max-w-4xl text-5xl font-bold leading-tight md:text-7xl">
+          <h2 className="mb-8 max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
 
             Transforme ambientes em experiências memoráveis.
 
           </h2>
 
-          <p className="max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">
+          <p className="max-w-2xl text-lg leading-relaxed text-white/80">
 
             Fragrâncias sofisticadas desenvolvidas para criar atmosferas acolhedoras,
             elegantes e emocionalmente marcantes.
@@ -412,7 +383,7 @@ export default function Home() {
 
           <a
             href="#colecoes"
-            className="mt-12 inline-flex rounded-full border border-white px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-[#2d2218]"
+            className="mt-10 inline-flex rounded-full border border-white px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-[#2d2218]"
           >
 
             Explorar Coleção
@@ -424,88 +395,60 @@ export default function Home() {
       </section>
 
       {/* FOOTER PREMIUM */}
-      <footer className="bg-[#2d2218] px-10 py-20 text-[#d8cfc5]">
+      <footer className="bg-[#2d2218] px-8 py-16 text-[#d8cfc5]">
 
-        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-2">
+        <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
 
-          {/* BRAND */}
-          <div className="max-w-lg">
+          {/* LOGO */}
+          <h3 className="mb-5 text-4xl font-semibold text-white">
+            Aluria Premium
+          </h3>
 
-            <h3 className="mb-6 text-4xl font-semibold text-white">
-              Aluria Premium
-            </h3>
+          <div className="mb-8 h-[1px] w-20 bg-[#b89574]" />
 
-            <div className="mb-6 h-[1px] w-16 bg-[#b89574]" />
+          {/* TEXTO */}
+          <p className="max-w-3xl text-[17px] leading-[1.9] text-[#d8cfc5]">
 
-            <p className="text-justify text-[18px] leading-[1.9] text-[#d8cfc5]">
+            Velas aromáticas premium desenvolvidas para transformar ambientes
+            em experiências sofisticadas. Unimos fragrâncias exclusivas,
+            produção artesanal e design minimalista para criar momentos
+            de bem-estar, conforto e elegância.
 
-              Velas aromáticas premium desenvolvidas para transformar ambientes
-              em experiências sofisticadas. Unimos fragrâncias exclusivas,
-              produção artesanal e design minimalista para criar momentos
-              de bem-estar, conforto e elegância.
+          </p>
 
-            </p>
+          {/* LINKS */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-10 text-[18px]">
 
-          </div>
+            <Link
+              href="/sobre"
+              className="transition hover:text-white"
+            >
+              Nossa História
+            </Link>
 
-          {/* INSTITUCIONAL */}
-          <div className="flex justify-start lg:justify-end">
+            <Link
+              href="/contato"
+              className="transition hover:text-white"
+            >
+              Fale Conosco
+            </Link>
 
-            <div className="w-full max-w-xs">
-
-              <h4 className="mb-6 text-3xl font-semibold text-white">
-                Institucional
-              </h4>
-
-              <div className="mb-8 h-[1px] w-16 bg-[#b89574]" />
-
-              <div className="flex flex-col gap-6 text-[20px] text-[#d8cfc5]">
-
-                <Link
-                  href="/sobre"
-                  className="transition hover:text-white"
-                >
-                  Nossa História
-                </Link>
-
-                <Link
-                  href="/contato"
-                  className="transition hover:text-white"
-                >
-                  Fale Conosco
-                </Link>
-
-              </div>
-
-              <div className="mt-10 border-t border-[#ffffff20] pt-8">
-
-                <a
-                  href="https://wa.me/5548999567140"
-                  target="_blank"
-                  className="flex items-center gap-3 text-[20px] text-[#d8cfc5] transition hover:text-white"
-                >
-
-                  <span className="text-2xl">
-                    💬
-                  </span>
-
-                  <span>
-                    (48) 99956-7140
-                  </span>
-
-                </a>
-
-              </div>
-
-            </div>
+            <a
+              href="https://wa.me/5548999567140"
+              target="_blank"
+              className="transition hover:text-white"
+            >
+              WhatsApp
+            </a>
 
           </div>
 
-        </div>
+          {/* COPYRIGHT */}
+          <div className="mt-14 w-full border-t border-[#ffffff15] pt-8 text-sm text-[#b8aea4]">
 
-        <div className="mx-auto mt-16 max-w-7xl border-t border-[#ffffff20] pt-8 text-center text-sm text-[#b8aea4]">
+            © 2026 Aluria Premium. Todos os direitos reservados.
 
-          © 2026 Aluria Premium. Todos os direitos reservados.
+          </div>
 
         </div>
 
