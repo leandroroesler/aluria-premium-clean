@@ -75,7 +75,7 @@ export async function POST(req: Request) {
       to: [
   "contato@aluriapremium.com.br",
   "leandroroesler@gmail.com"
-]
+],
 
       replyTo: email,
 
