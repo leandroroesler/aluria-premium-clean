@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: error.message,
+          error: "Erro ao salvar mensagem",
         },
         {
           status: 500,
@@ -60,80 +60,126 @@ export async function POST(req: Request) {
 
     console.log("MENSAGEM SALVA:", data)
 
-    // ENVIO EMAIL INTERNO
-    try {
-      const emailResponse = await resend.emails.send({
-        from: "Aluria Premium <noreply@aluriapremium.com.br>",
-        to: ["contato@aluriapremium.com.br"],
-        replyTo: email,
-        subject: `Novo contato - ${subject}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; padding: 20px;">
-            <h2>Novo contato recebido pelo site</h2>
+    // ======================================================
+    // EMAIL INTERNO
+    // ======================================================
 
-            <p><strong>Nome:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Telefone:</strong> ${phone || "Não informado"}</p>
-            <p><strong>Assunto:</strong> ${subject}</p>
+    const internalEmail = await resend.emails.send({
+      // TEMPORÁRIO PARA TESTE:
+      // se funcionar, o problema é DNS/domínio
+      // depois volte para:
+      // "Aluria Premium <noreply@aluriapremium.com.br>"
 
-            <hr />
+      from: "Aluria Premium <onboarding@resend.dev>",
 
-            <p><strong>Mensagem:</strong></p>
+      to: ["contato@aluriapremium.com.br"],
 
-            <p style="white-space: pre-line;">
-              ${message}
-            </p>
-          </div>
-        `,
-      })
+      replyTo: email,
 
-      console.log("EMAIL ENVIADO:", emailResponse)
-    } catch (emailError: any) {
-      console.error("ERRO RESEND:", emailError)
+      subject: `Novo contato - ${subject}`,
+
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>Novo contato recebido pelo site</h2>
+
+          <p><strong>Nome:</strong> ${name}</p>
+
+          <p><strong>Email:</strong> ${email}</p>
+
+          <p><strong>Telefone:</strong> ${
+            phone || "Não informado"
+          }</p>
+
+          <p><strong>Assunto:</strong> ${subject}</p>
+
+          <hr />
+
+          <p><strong>Mensagem:</strong></p>
+
+          <p style="white-space: pre-line;">
+            ${message}
+          </p>
+        </div>
+      `,
+    })
+
+    console.log("RESPOSTA EMAIL INTERNO:", internalEmail)
+
+    // VALIDA RETORNO RESEND
+    if (internalEmail.error) {
+      console.error(
+        "ERRO ENVIO EMAIL INTERNO:",
+        internalEmail.error
+      )
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Erro ao enviar email interno",
+        },
+        {
+          status: 500,
+        }
+      )
     }
 
-    // EMAIL AUTOMÁTICO PARA O CLIENTE
-    try {
-      const customerEmail = await resend.emails.send({
-        from: "Aluria Premium <noreply@aluriapremium.com.br>",
-        to: [email],
-        subject: "Recebemos sua mensagem | Aluria Premium",
-        html: `
-          <div style="font-family: Arial, sans-serif; padding: 20px;">
-            <h2>Olá, ${name}!</h2>
+    // ======================================================
+    // EMAIL AUTOMÁTICO CLIENTE
+    // ======================================================
 
-            <p>
-              Recebemos sua mensagem com sucesso e retornaremos o mais breve possível.
-            </p>
+    const customerEmail = await resend.emails.send({
+      from: "Aluria Premium <onboarding@resend.dev>",
 
-            <p>
-              Obrigado por entrar em contato com a Aluria Premium.
-            </p>
+      to: [email],
 
-            <hr />
+      subject: "Recebemos sua mensagem | Aluria Premium",
 
-            <p><strong>Resumo da mensagem:</strong></p>
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>Olá, ${name}!</h2>
 
-            <p><strong>Assunto:</strong> ${subject}</p>
+          <p>
+            Recebemos sua mensagem com sucesso e retornaremos
+            o mais breve possível.
+          </p>
 
-            <p style="white-space: pre-line;">
-              ${message}
-            </p>
+          <p>
+            Obrigado por entrar em contato com a
+            Aluria Premium.
+          </p>
 
-            <br />
+          <hr />
 
-            <p>
-              Atenciosamente,<br />
-              Equipe Aluria Premium
-            </p>
-          </div>
-        `,
-      })
+          <p><strong>Resumo da mensagem:</strong></p>
 
-      console.log("EMAIL CLIENTE ENVIADO:", customerEmail)
-    } catch (customerError: any) {
-      console.error("ERRO EMAIL CLIENTE:", customerError)
+          <p><strong>Assunto:</strong> ${subject}</p>
+
+          <p style="white-space: pre-line;">
+            ${message}
+          </p>
+
+          <br />
+
+          <p>
+            Atenciosamente,<br />
+            Equipe Aluria Premium
+          </p>
+        </div>
+      `,
+    })
+
+    console.log("RESPOSTA EMAIL CLIENTE:", customerEmail)
+
+    if (customerEmail.error) {
+      console.error(
+        "ERRO EMAIL CLIENTE:",
+        customerEmail.error
+      )
     }
+
+    // ======================================================
+    // SUCESSO
+    // ======================================================
 
     return NextResponse.json({
       success: true,
@@ -145,7 +191,8 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: error.message || "Erro interno do servidor",
+        error:
+          error.message || "Erro interno do servidor",
       },
       {
         status: 500,
