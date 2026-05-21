@@ -7,9 +7,12 @@ import Link from "next/link";
 
 export default function Home() {
 
-  const { totalItems } = useCart();
+  const { addToCart, totalItems } = useCart();
 
   const [openProduct, setOpenProduct] = useState("");
+
+  const [cartSuccessOpen, setCartSuccessOpen] =
+    useState(false);
 
   const products = {
 
@@ -18,6 +21,12 @@ export default function Home() {
       price: 39.90,
       description:
         "Profundo, elegante e acolhedor. A união das notas terrosas do vetiver com a delicadeza do lírio cria uma atmosfera sofisticada, suave e envolvente.",
+      notes:
+        "Saída: cítricos suaves e folhas verdes. Corpo: lírio branco e nuances florais delicadas. Fundo: vetiver, musk e madeiras nobres.",
+      duration: "20 a 25 horas de queima",
+      weight: "100g",
+      environment:
+        "Salas de estar, quartos, halls e ambientes sofisticados com atmosfera aconchegante e elegante.",
       image: "/images/vela3vertiver.jpeg",
     },
 
@@ -26,6 +35,12 @@ export default function Home() {
       price: 39.90,
       description:
         "Fresco, leve e sofisticado. Uma fragrância verde e serena que traduz a elegância do minimalismo e a sensação de bem-estar de um refúgio contemporâneo.",
+      notes:
+        "Saída: folhas verdes, bamboo fresco e bergamota. Corpo: chá branco e notas aquáticas suaves. Fundo: musk branco e madeiras leves.",
+      duration: "20 a 25 horas de queima",
+      weight: "100g",
+      environment:
+        "Lavabos, salas, escritórios, quartos e ambientes minimalistas que buscam frescor e sofisticação.",
       image: "/images/vela1broto.jpeg",
     },
 
@@ -34,6 +49,12 @@ export default function Home() {
       price: 39.90,
       description:
         "Equilíbrio entre frescor e conforto. O toque aromático do alecrim encontra a cremosidade da baunilha em uma composição acolhedora, refinada e atemporal.",
+      notes:
+        "Saída: alecrim fresco e notas verdes aromáticas. Corpo: lavanda suave e ervas delicadas. Fundo: baunilha cremosa, musk e âmbar leve.",
+      duration: "20 a 25 horas de queima",
+      weight: "100g",
+      environment:
+        "Quartos, salas de leitura, espaços de relaxamento e ambientes que pedem aconchego e tranquilidade.",
       image: "/images/vela2alecrim.jpeg",
     },
 
@@ -41,11 +62,22 @@ export default function Home() {
       title: "Chá Branco & Romã",
       price: 39.90,
       description:
-        "Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã.",
+        "Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã. Ideal para criar ambientes aconchegantes, relaxantes e refinados.",
+      notes:
+        "Saída: romã fresca e acordes cítricos suaves. Corpo: chá branco e flores delicadas. Fundo: almíscar branco e madeiras suaves.",
+      duration: "20 a 25 horas de queima",
+      weight: "100g",
+      environment:
+        "Quartos, salas, lavabos, escritórios e ambientes sofisticados.",
       image: "/images/Cha_Branco_Roma.PNG",
     },
 
   };
+
+  const product =
+    products[
+      openProduct as keyof typeof products
+    ] || null;
 
   return (
 
@@ -399,14 +431,12 @@ export default function Home() {
 
         <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
 
-          {/* LOGO */}
           <h3 className="mb-5 text-4xl font-semibold text-white">
             Aluria Premium
           </h3>
 
           <div className="mb-8 h-[1px] w-20 bg-[#b89574]" />
 
-          {/* TEXTO */}
           <p className="max-w-3xl text-[17px] leading-[1.9] text-[#d8cfc5]">
 
             Velas aromáticas premium desenvolvidas para transformar ambientes
@@ -416,7 +446,6 @@ export default function Home() {
 
           </p>
 
-          {/* LINKS */}
           <div className="mt-12 flex flex-wrap items-center justify-center gap-10 text-[18px]">
 
             <Link
@@ -443,7 +472,6 @@ export default function Home() {
 
           </div>
 
-          {/* COPYRIGHT */}
           <div className="mt-14 w-full border-t border-[#ffffff15] pt-8 text-sm text-[#b8aea4]">
 
             © 2026 Aluria Premium. Todos os direitos reservados.
@@ -453,6 +481,155 @@ export default function Home() {
         </div>
 
       </footer>
+
+      {/* MODAL PRODUTO */}
+      {product && (
+
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-6">
+
+          <div className="relative max-h-[95vh] w-full max-w-5xl overflow-y-auto rounded-[40px] bg-white">
+
+            <button
+              onClick={() => setOpenProduct("")}
+              className="absolute right-6 top-6 z-50 text-3xl text-[#2d2218]"
+            >
+              ×
+            </button>
+
+            <div className="grid lg:grid-cols-2">
+
+              <div className="relative h-[450px] lg:h-full">
+
+                <img
+                  src={product.image}
+                  className="h-full w-full object-cover"
+                />
+
+              </div>
+
+              <div className="flex flex-col justify-center p-10 lg:p-14">
+
+                <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#8a7768]">
+                  Coleção Signature
+                </p>
+
+                <h2 className="mb-6 text-5xl font-bold text-[#2d2218]">
+                  {product.title}
+                </h2>
+
+                <p className="mb-8 text-lg leading-relaxed text-[#6b5a4d]">
+                  {product.description}
+                </p>
+
+                <div className="mb-8 space-y-5 border-y border-[#e7ddd3] py-8">
+
+                  <div>
+                    <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                      Notas Olfativas
+                    </h4>
+
+                    <p className="leading-relaxed text-[#6b5a4d]">
+                      {product.notes}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+
+                    <div>
+                      <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                        Duração
+                      </h4>
+
+                      <p className="text-[#6b5a4d]">
+                        {product.duration}
+                      </p>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                        Peso
+                      </h4>
+
+                      <p className="text-[#6b5a4d]">
+                        {product.weight}
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div>
+                    <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                      Ambientes
+                    </h4>
+
+                    <p className="leading-relaxed text-[#6b5a4d]">
+                      {product.environment}
+                    </p>
+                  </div>
+
+                </div>
+
+                <div className="mb-8 flex items-center justify-between">
+
+                  <span className="text-4xl font-bold text-[#2d2218]">
+                    R$ {product.price.toFixed(2)}
+                  </span>
+
+                </div>
+
+                <button
+                  onClick={() => {
+
+                    addToCart({
+                      id: openProduct,
+                      title: product.title,
+                      price: product.price,
+                      image: product.image,
+                      quantity: 1,
+                    });
+
+                    setCartSuccessOpen(true);
+
+                    setTimeout(() => {
+                      setCartSuccessOpen(false);
+                    }, 2500);
+                  }}
+                  className="w-full rounded-full bg-[#2d2218] px-8 py-5 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-90"
+                >
+
+                  Adicionar ao Carrinho
+
+                </button>
+
+                <a
+                  href="/checkout"
+                  className="mt-4 w-full rounded-full border border-[#2d2218] px-8 py-5 text-center text-sm uppercase tracking-[0.2em] text-[#2d2218] transition hover:bg-[#2d2218] hover:text-white"
+                >
+
+                  Finalizar Compra
+
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+      {/* ALERTA CARRINHO */}
+      {cartSuccessOpen && (
+
+        <div className="fixed bottom-8 right-8 z-[999] rounded-full bg-[#2d2218] px-6 py-4 text-white shadow-2xl">
+
+          Produto adicionado ao carrinho
+
+        </div>
+
+      )}
 
     </main>
 
