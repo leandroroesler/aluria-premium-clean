@@ -72,7 +72,10 @@ export async function POST(req: Request) {
 
       from: "Aluria Premium <noreply@aluriapremium.com.br>",
 
-      to: ["contato@aluriapremium.com.br"],
+      to: [
+  "contato@aluriapremium.com.br",
+  "leandroroesler@gmail.com"
+]
 
       replyTo: email,
 
