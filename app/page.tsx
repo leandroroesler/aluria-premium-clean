@@ -11,9 +11,6 @@ export default function Home() {
 
   const [openProduct, setOpenProduct] = useState("");
 
-  const [cartSuccessOpen, setCartSuccessOpen] =
-    useState(false);
-
   const products = {
 
     vertiver: {
@@ -84,13 +81,13 @@ export default function Home() {
     <main className="min-h-screen bg-[#f5efe8] text-[#2d2218]">
 
       {/* HEADER */}
-      <header className="w-full flex items-center justify-between px-10 py-8 absolute top-0 left-0 z-50">
+      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-10 py-8">
 
         <div className="flex items-center">
 
           <Image
             src="/images/logo-aluria.png"
-            alt="Alúria Velas Aromáticas"
+            alt="Alúria Premium"
             width={420}
             height={140}
             priority
@@ -103,29 +100,29 @@ export default function Home() {
 
         </div>
 
-        <nav className="hidden md:flex gap-8 text-sm uppercase tracking-[0.2em]">
+        <nav className="hidden gap-8 text-sm uppercase tracking-[0.2em] md:flex">
 
-          <a href="#" className="hover:opacity-70 transition">
+          <a href="#" className="transition hover:opacity-70">
             Home
           </a>
 
           <a
             href="#colecoes"
-            className="hover:opacity-70 transition"
+            className="transition hover:opacity-70"
           >
             Coleções
           </a>
 
           <Link
             href="/sobre"
-            className="hover:opacity-70 transition"
+            className="transition hover:opacity-70"
           >
             Sobre
           </Link>
 
           <Link
             href="/contato"
-            className="hover:opacity-70 transition"
+            className="transition hover:opacity-70"
           >
             Contato
           </Link>
@@ -135,14 +132,14 @@ export default function Home() {
         {/* CARRINHO */}
         <a
           href="/carrinho"
-          className="relative flex items-center hover:scale-105 transition"
+          className="relative flex items-center transition hover:scale-105"
         >
 
           <span className="text-2xl">
             🛒
           </span>
 
-          <span className="absolute -top-2 -right-3 bg-[#2d2218] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+          <span className="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#2d2218] text-xs text-white">
             {totalItems}
           </span>
 
@@ -151,23 +148,23 @@ export default function Home() {
       </header>
 
       {/* HERO */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-6">
+      <section className="flex h-screen flex-col items-center justify-center px-6 text-center">
 
-        <p className="uppercase tracking-[0.3em] text-sm text-[#8a7768] mb-6">
+        <p className="mb-6 text-sm uppercase tracking-[0.3em] text-[#8a7768]">
           Velas Aromáticas Premium
         </p>
 
-        <h1 className="text-6xl md:text-8xl font-bold mb-8">
+        <h1 className="mb-8 text-6xl font-bold md:text-8xl">
           Aluria Premium
         </h1>
 
-        <p className="text-xl md:text-2xl max-w-3xl text-[#6b5a4d] leading-relaxed">
+        <p className="max-w-3xl text-xl leading-relaxed text-[#6b5a4d] md:text-2xl">
           Transformando ambientes em experiências sofisticadas através de fragrâncias exclusivas e design elegante.
         </p>
 
         <a
           href="#colecoes"
-          className="mt-12 inline-block bg-[#2d2218] text-white px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] hover:opacity-90 transition"
+          className="mt-12 inline-block rounded-full bg-[#2d2218] px-10 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-90"
         >
           Explorar Coleção
         </a>
@@ -177,32 +174,32 @@ export default function Home() {
       {/* PRODUTOS */}
       <section
         id="colecoes"
-        className="px-10 py-24 bg-white"
+        className="bg-white px-10 py-24"
       >
 
-        <div className="text-center mb-20">
+        <div className="mb-20 text-center">
 
-          <p className="uppercase tracking-[0.3em] text-sm text-[#8a7768] mb-4">
+          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#8a7768]">
             Coleção Signature
           </p>
 
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="mb-6 text-4xl font-bold">
             Fragrâncias Exclusivas
           </h2>
 
-          <p className="text-[#6b5a4d] text-xl">
+          <p className="text-xl text-[#6b5a4d]">
             Desenvolvidas para criar atmosferas sofisticadas e memoráveis.
           </p>
 
         </div>
 
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid gap-8 md:grid-cols-4">
 
           {Object.entries(products).map(([key, product]) => (
 
             <div
               key={key}
-              className="bg-[#f5efe8] rounded-[30px] overflow-hidden"
+              className="overflow-hidden rounded-[30px] bg-[#f5efe8]"
             >
 
               <img
@@ -212,17 +209,17 @@ export default function Home() {
 
               <div className="p-8">
 
-                <h3 className="text-3xl font-bold mb-4">
+                <h3 className="mb-4 text-3xl font-bold">
                   {product.title}
                 </h3>
 
-                <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
+                <p className="mb-6 leading-6 text-[#6b5a4d] text-justify">
                   {product.description}
                 </p>
 
                 <button
                   onClick={() => setOpenProduct(key)}
-                  className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
+                  className="rounded-full border border-[#2d2218] px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#2d2218] hover:text-white"
                 >
                   Ver Produto
                 </button>
@@ -258,7 +255,7 @@ export default function Home() {
               Experiência Alúria
             </p>
 
-            <h2 className="mb-8 text-5xl leading-tight font-bold text-[#2d2218]">
+            <h2 className="mb-8 text-5xl font-bold leading-tight text-[#2d2218]">
 
               Fragrâncias desenvolvidas para transformar ambientes em experiências sofisticadas.
 
@@ -267,7 +264,15 @@ export default function Home() {
             <p className="mb-8 text-lg leading-relaxed text-[#6b5a4d]">
 
               Cada vela da Alúria Premium é produzida para criar atmosferas acolhedoras,
-              elegantes e memoráveis.
+              elegantes e memoráveis. Uma combinação entre design minimalista,
+              fragrâncias exclusivas e momentos de bem-estar.
+
+            </p>
+
+            <p className="mb-10 text-lg leading-relaxed text-[#6b5a4d]">
+
+              Desenvolvemos composições olfativas sofisticadas que elevam a experiência
+              dos ambientes e traduzem conforto, elegância e personalidade.
 
             </p>
 
@@ -291,7 +296,7 @@ export default function Home() {
 
         <div className="mx-auto max-w-7xl">
 
-          <div className="text-center mb-20">
+          <div className="mb-20 text-center">
 
             <p className="mb-4 text-sm uppercase tracking-[0.35em] text-[#8a7768]">
               Diferenciais Alúria
@@ -306,43 +311,67 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
 
             <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
-              <div className="mb-6 text-5xl">✨</div>
-              <h3 className="mb-4 text-2xl font-bold">
+
+              <div className="mb-6 text-5xl">
+                ✨
+              </div>
+
+              <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
                 Produção Artesanal
               </h3>
+
               <p className="leading-relaxed text-[#6b5a4d]">
-                Velas produzidas com cuidado em cada detalhe.
+                Velas produzidas com cuidado em cada detalhe para proporcionar experiências sofisticadas e memoráveis.
               </p>
+
             </div>
 
             <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
-              <div className="mb-6 text-5xl">🌿</div>
-              <h3 className="mb-4 text-2xl font-bold">
+
+              <div className="mb-6 text-5xl">
+                🌿
+              </div>
+
+              <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
                 Fragrâncias Exclusivas
               </h3>
+
               <p className="leading-relaxed text-[#6b5a4d]">
-                Composições olfativas sofisticadas e memoráveis.
+                Combinações olfativas desenvolvidas para criar ambientes acolhedores, elegantes e sofisticados.
               </p>
+
             </div>
 
             <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
-              <div className="mb-6 text-5xl">📦</div>
-              <h3 className="mb-4 text-2xl font-bold">
+
+              <div className="mb-6 text-5xl">
+                📦
+              </div>
+
+              <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
                 Entrega Segura
               </h3>
+
               <p className="leading-relaxed text-[#6b5a4d]">
-                Embalagens cuidadosas e envio protegido.
+                Embalagens cuidadosas e processo de envio pensado para garantir proteção e excelência.
               </p>
+
             </div>
 
             <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
-              <div className="mb-6 text-5xl">🔒</div>
-              <h3 className="mb-4 text-2xl font-bold">
+
+              <div className="mb-6 text-5xl">
+                🔒
+              </div>
+
+              <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
                 Pagamento Seguro
               </h3>
+
               <p className="leading-relaxed text-[#6b5a4d]">
-                Ambiente protegido para uma compra tranquila.
+                Ambiente protegido e pagamentos processados com segurança para uma experiência tranquila.
               </p>
+
             </div>
 
           </div>
@@ -368,110 +397,105 @@ export default function Home() {
             Alúria Premium
           </p>
 
-          <h2 className="mb-8 max-w-4xl text-5xl leading-tight font-bold md:text-7xl">
+          <h2 className="mb-8 max-w-4xl text-5xl font-bold leading-tight md:text-7xl">
+
             Transforme ambientes em experiências memoráveis.
+
           </h2>
 
           <p className="max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">
-            Fragrâncias sofisticadas desenvolvidas para criar atmosferas acolhedoras e elegantes.
+
+            Fragrâncias sofisticadas desenvolvidas para criar atmosferas acolhedoras,
+            elegantes e emocionalmente marcantes.
+
           </p>
+
+          <a
+            href="#colecoes"
+            className="mt-12 inline-flex rounded-full border border-white px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-[#2d2218]"
+          >
+
+            Explorar Coleção
+
+          </a>
 
         </div>
 
       </section>
 
       {/* FOOTER PREMIUM */}
-      <footer className="bg-[#2d2218] px-10 py-24 text-[#d8cfc5]">
+      <footer className="bg-[#2d2218] px-10 py-28 text-[#d8cfc5]">
 
-        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-7xl gap-20 lg:grid-cols-2">
 
           {/* BRAND */}
-          <div>
+          <div className="max-w-xl">
 
-            <h3 className="mb-6 text-3xl font-bold text-white">
+            <h3 className="mb-8 text-5xl font-semibold text-white">
               Aluria Premium
             </h3>
 
-            <p className="leading-relaxed text-[#d8cfc5]">
-              Velas aromáticas premium desenvolvidas para transformar ambientes em experiências sofisticadas.
+            <div className="mb-8 h-[1px] w-20 bg-[#b89574]" />
+
+            <p className="text-justify text-[22px] leading-[2.1] text-[#d8cfc5]">
+
+              Velas aromáticas premium desenvolvidas para transformar ambientes
+              em experiências sofisticadas. Unimos fragrâncias exclusivas,
+              produção artesanal e design minimalista para criar momentos
+              de bem-estar, conforto e elegância no seu dia a dia.
+
             </p>
 
           </div>
 
-          {/* NAVEGAÇÃO */}
-          <div>
+          {/* INSTITUCIONAL */}
+          <div className="flex justify-start lg:justify-end">
 
-            <h4 className="mb-6 text-lg font-semibold text-white">
-              Navegação
-            </h4>
+            <div className="w-full max-w-sm">
 
-            <div className="flex flex-col gap-4">
+              <h4 className="mb-8 text-4xl font-semibold text-white">
+                Institucional
+              </h4>
 
-              <a href="#">
-                Home
-              </a>
+              <div className="mb-10 h-[1px] w-20 bg-[#b89574]" />
 
-              <a href="#colecoes">
-                Coleções
-              </a>
+              <div className="flex flex-col gap-8 text-[24px] text-[#d8cfc5]">
 
-              <Link href="/sobre">
-                Sobre
-              </Link>
+                <Link
+                  href="/sobre"
+                  className="transition hover:text-white"
+                >
+                  Nossa História
+                </Link>
 
-              <Link href="/contato">
-                Contato
-              </Link>
+                <Link
+                  href="/contato"
+                  className="transition hover:text-white"
+                >
+                  Fale Conosco
+                </Link>
 
-            </div>
+              </div>
 
-          </div>
+              <div className="mt-12 border-t border-[#ffffff20] pt-10">
 
-          {/* ATENDIMENTO */}
-          <div>
+                <a
+                  href="https://wa.me/5548999567140"
+                  target="_blank"
+                  className="flex items-center gap-4 text-[24px] text-[#d8cfc5] transition hover:text-white"
+                >
 
-            <h4 className="mb-6 text-lg font-semibold text-white">
-              Atendimento
-            </h4>
+                  <span className="text-3xl">
+                    💬
+                  </span>
 
-            <div className="flex flex-col gap-4">
+                  <span>
+                    (48) 99956-7140
+                  </span>
 
-              <p>
-                leandroroesler@gmail.com
-              </p>
+                </a>
 
-              <p>
-                (48) 99956-7140
-              </p>
-
-              <p>
-                Segunda à Sexta
-              </p>
-
-            </div>
-
-          </div>
-
-          {/* SOCIAL */}
-          <div>
-
-            <h4 className="mb-6 text-lg font-semibold text-white">
-              Institucional
-            </h4>
-
-            <div className="flex flex-col gap-4">
-
-              <a href="#">
-                Instagram
-              </a>
-
-              <Link href="/sobre">
-                Nossa História
-              </Link>
-
-              <Link href="/contato">
-                Fale Conosco
-              </Link>
+              </div>
 
             </div>
 
@@ -479,7 +503,7 @@ export default function Home() {
 
         </div>
 
-        <div className="mx-auto mt-20 max-w-7xl border-t border-white/10 pt-8 text-center text-sm text-[#b8aea4]">
+        <div className="mx-auto mt-24 max-w-7xl border-t border-[#ffffff20] pt-10 text-center text-lg text-[#b8aea4]">
 
           © 2026 Aluria Premium. Todos os direitos reservados.
 
