@@ -62,7 +62,7 @@ export default function Home() {
       title: "Chá Branco & Romã",
       price: 39.90,
       description:
-        "Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã. Ideal para criar ambientes aconchegantes, relaxantes e refinados, trazendo sensação de conforto, frescor e bem-estar.",
+        "Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã.",
       notes:
         "Saída: romã fresca e acordes cítricos suaves. Corpo: chá branco e flores delicadas. Fundo: almíscar branco e madeiras suaves.",
       duration: "20 a 25 horas de queima",
@@ -198,118 +198,151 @@ export default function Home() {
 
         <div className="grid md:grid-cols-4 gap-8">
 
-          {/* PRODUTO 1 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
+          {Object.entries(products).map(([key, product]) => (
+
+            <div
+              key={key}
+              className="bg-[#f5efe8] rounded-[30px] overflow-hidden"
+            >
+
+              <img
+                src={product.image}
+                className="h-[400px] w-full object-cover object-center"
+              />
+
+              <div className="p-8">
+
+                <h3 className="text-3xl font-bold mb-4">
+                  {product.title}
+                </h3>
+
+                <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
+                  {product.description}
+                </p>
+
+                <button
+                  onClick={() => setOpenProduct(key)}
+                  className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
+                >
+                  Ver Produto
+                </button>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </section>
+
+      {/* EXPERIÊNCIA ALÚRIA */}
+      <section className="bg-[#f5efe8] px-10 py-28">
+
+        <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+
+          <div className="relative overflow-hidden rounded-[40px]">
 
             <img
               src="/images/vela3vertiver.jpeg"
-              className="h-[400px] w-full object-cover object-center"
+              alt="Experiência Alúria Premium"
+              className="h-[650px] w-full object-cover"
             />
-
-            <div className="p-8">
-
-              <h3 className="text-3xl font-bold mb-4">
-                Vertiver & Lírio
-              </h3>
-
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Profundo, elegante e acolhedor. A união das notas terrosas do vetiver com a delicadeza do lírio cria uma atmosfera sofisticada, suave e envolvente.
-              </p>
-
-              <button
-                onClick={() => setOpenProduct("vertiver")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
-
-            </div>
 
           </div>
 
-          {/* PRODUTO 2 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
+          <div>
 
-            <img
-              src="/images/vela1broto.jpeg"
-              className="h-[400px] w-full object-cover object-center"
-            />
+            <p className="mb-4 text-sm uppercase tracking-[0.35em] text-[#8a7768]">
+              Experiência Alúria
+            </p>
 
-            <div className="p-8">
+            <h2 className="mb-8 text-5xl leading-tight font-bold text-[#2d2218]">
 
-              <h3 className="text-3xl font-bold mb-4">
-                Broto de Bamboo
-              </h3>
+              Fragrâncias desenvolvidas para transformar ambientes em experiências sofisticadas.
 
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Fresco, leve e sofisticado. Uma fragrância verde e serena que traduz a elegância do minimalismo e a sensação de bem-estar de um refúgio contemporâneo.
-              </p>
+            </h2>
 
-              <button
-                onClick={() => setOpenProduct("bamboo")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
+            <p className="mb-8 text-lg leading-relaxed text-[#6b5a4d]">
 
-            </div>
+              Cada vela da Alúria Premium é produzida para criar atmosferas acolhedoras,
+              elegantes e memoráveis.
 
-          </div>
+            </p>
 
-          {/* PRODUTO 3 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
+            <Link
+              href="/sobre"
+              className="inline-flex rounded-full bg-[#2d2218] px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-90"
+            >
 
-            <img
-              src="/images/vela2alecrim.jpeg"
-              className="h-[400px] w-full object-cover object-center"
-            />
+              Conheça nossa história
 
-            <div className="p-8">
-
-              <h3 className="text-3xl font-bold mb-4">
-                Alecrim & Baunilha
-              </h3>
-
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Equilíbrio entre frescor e conforto. O toque aromático do alecrim encontra a cremosidade da baunilha em uma composição acolhedora, refinada e atemporal.
-              </p>
-
-              <button
-                onClick={() => setOpenProduct("alecrim")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
-
-            </div>
+            </Link>
 
           </div>
 
-          {/* PRODUTO 4 */}
-          <div className="bg-[#f5efe8] rounded-[30px] overflow-hidden">
+        </div>
 
-            <img
-              src="/images/Cha_Branco_Roma.PNG"
-              className="h-[400px] w-full object-cover object-center"
-            />
+      </section>
 
-            <div className="p-8">
+      {/* DIFERENCIAIS */}
+      <section className="bg-white px-10 py-28">
 
-              <h3 className="text-3xl font-bold mb-4">
-                Chá Branco & Romã
+        <div className="mx-auto max-w-7xl">
+
+          <div className="text-center mb-20">
+
+            <p className="mb-4 text-sm uppercase tracking-[0.35em] text-[#8a7768]">
+              Diferenciais Alúria
+            </p>
+
+            <h2 className="text-5xl font-bold text-[#2d2218]">
+              Sofisticação em cada detalhe
+            </h2>
+
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+
+            <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
+              <div className="mb-6 text-5xl">✨</div>
+              <h3 className="mb-4 text-2xl font-bold">
+                Produção Artesanal
               </h3>
-
-              <p className="text-[#6b5a4d] leading-6 mb-6 text-justify">
-                Uma fragrância sofisticada e delicada que combina a leveza do chá branco com o toque frutado e elegante da romã.
+              <p className="leading-relaxed text-[#6b5a4d]">
+                Velas produzidas com cuidado em cada detalhe.
               </p>
+            </div>
 
-              <button
-                onClick={() => setOpenProduct("chaBrancoRoma")}
-                className="border border-[#2d2218] px-6 py-3 rounded-full uppercase tracking-[0.2em] text-sm hover:bg-[#2d2218] hover:text-white transition"
-              >
-                Ver Produto
-              </button>
+            <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
+              <div className="mb-6 text-5xl">🌿</div>
+              <h3 className="mb-4 text-2xl font-bold">
+                Fragrâncias Exclusivas
+              </h3>
+              <p className="leading-relaxed text-[#6b5a4d]">
+                Composições olfativas sofisticadas e memoráveis.
+              </p>
+            </div>
 
+            <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
+              <div className="mb-6 text-5xl">📦</div>
+              <h3 className="mb-4 text-2xl font-bold">
+                Entrega Segura
+              </h3>
+              <p className="leading-relaxed text-[#6b5a4d]">
+                Embalagens cuidadosas e envio protegido.
+              </p>
+            </div>
+
+            <div className="rounded-[30px] bg-[#f5efe8] p-10 text-center">
+              <div className="mb-6 text-5xl">🔒</div>
+              <h3 className="mb-4 text-2xl font-bold">
+                Pagamento Seguro
+              </h3>
+              <p className="leading-relaxed text-[#6b5a4d]">
+                Ambiente protegido para uma compra tranquila.
+              </p>
             </div>
 
           </div>
@@ -318,131 +351,141 @@ export default function Home() {
 
       </section>
 
-      {/* MODAL PRODUTO */}
-      {
-        openProduct !== "" && product && (
+      {/* BANNER EMOCIONAL */}
+      <section className="relative h-[700px] overflow-hidden">
 
-          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-6">
+        <img
+          src="/images/vela2alecrim.jpeg"
+          alt="Alúria Premium"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
 
-            <div className="bg-white max-w-3xl w-full rounded-[30px] p-8 relative max-h-[85vh] overflow-y-auto">
+        <div className="absolute inset-0 bg-black/45" />
 
-              <button
-                onClick={() => setOpenProduct("")}
-                className="absolute top-6 right-6 text-3xl"
-              >
-                ×
-              </button>
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
 
-              <img
-                src={product?.image}
-                className="w-full h-[320px] object-cover object-center rounded-[20px] mb-8"
-              />
+          <p className="mb-6 text-sm uppercase tracking-[0.4em] text-white/80">
+            Alúria Premium
+          </p>
 
-              <h2 className="text-4xl font-bold mb-6">
-                {product?.title}
-              </h2>
+          <h2 className="mb-8 max-w-4xl text-5xl leading-tight font-bold md:text-7xl">
+            Transforme ambientes em experiências memoráveis.
+          </h2>
 
-              <p className="text-[#6b5a4d] leading-7 text-base mb-8 text-justify">
-                {product?.description}
-              </p>
+          <p className="max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">
+            Fragrâncias sofisticadas desenvolvidas para criar atmosferas acolhedoras e elegantes.
+          </p>
 
-              <div className="space-y-4 text-[#6b5a4d] text-base">
+        </div>
 
-                <p>
-                  <strong>Notas:</strong> {product?.notes}
-                </p>
+      </section>
 
-                <p>
-                  <strong>Duração:</strong> {product?.duration}
-                </p>
+      {/* FOOTER PREMIUM */}
+      <footer className="bg-[#2d2218] px-10 py-24 text-[#d8cfc5]">
 
-                <p>
-                  <strong>Peso:</strong> {product?.weight}
-                </p>
+        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-4">
 
-                <p>
-                  <strong>Ambiente ideal:</strong> {product?.environment}
-                </p>
+          {/* BRAND */}
+          <div>
 
-              </div>
+            <h3 className="mb-6 text-3xl font-bold text-white">
+              Aluria Premium
+            </h3>
 
-              <div className="mt-10">
+            <p className="leading-relaxed text-[#d8cfc5]">
+              Velas aromáticas premium desenvolvidas para transformar ambientes em experiências sofisticadas.
+            </p>
 
-                <button
-                  onClick={() => {
+          </div>
 
-                    addToCart({
-                      id: openProduct,
-                      title: product?.title || "",
-                      price: product?.price || 0,
-                      image: product?.image || "",
-                      quantity: 1,
-                    });
+          {/* NAVEGAÇÃO */}
+          <div>
 
-                    setOpenProduct("");
-                    setCartSuccessOpen(true);
+            <h4 className="mb-6 text-lg font-semibold text-white">
+              Navegação
+            </h4>
 
-                  }}
-                  className="bg-[#2d2218] text-white px-8 py-4 rounded-full uppercase tracking-[0.2em] hover:opacity-90 transition"
-                >
-                  Adicionar ao Carrinho
-                </button>
+            <div className="flex flex-col gap-4">
 
-              </div>
+              <a href="#">
+                Home
+              </a>
+
+              <a href="#colecoes">
+                Coleções
+              </a>
+
+              <Link href="/sobre">
+                Sobre
+              </Link>
+
+              <Link href="/contato">
+                Contato
+              </Link>
 
             </div>
 
           </div>
 
-        )
-      }
+          {/* ATENDIMENTO */}
+          <div>
 
-      {/* MODAL SUCESSO */}
-      {
-        cartSuccessOpen && (
+            <h4 className="mb-6 text-lg font-semibold text-white">
+              Atendimento
+            </h4>
 
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] px-6">
+            <div className="flex flex-col gap-4">
 
-            <div className="bg-white max-w-md w-full rounded-[30px] p-10 text-center">
-
-              <div className="w-20 h-20 rounded-full bg-[#2d2218] text-white flex items-center justify-center text-4xl mx-auto mb-8">
-                ✓
-              </div>
-
-              <h2 className="text-3xl font-bold mb-5">
-                Produto adicionado
-              </h2>
-
-              <p className="text-[#6b5a4d] text-lg leading-relaxed mb-10">
-                Seu produto foi adicionado ao carrinho com sucesso.
+              <p>
+                leandroroesler@gmail.com
               </p>
 
-              <div className="flex flex-col gap-4">
+              <p>
+                (48) 99956-7140
+              </p>
 
-                <button
-                  onClick={() =>
-                    setCartSuccessOpen(false)
-                  }
-                  className="border border-[#2d2218] py-4 rounded-full uppercase tracking-[0.2em] hover:bg-[#2d2218] hover:text-white transition"
-                >
-                  Adicionar mais itens
-                </button>
-
-                <a
-                  href="/carrinho"
-                  className="bg-[#2d2218] text-white py-4 rounded-full uppercase tracking-[0.2em] hover:opacity-90 transition text-center"
-                >
-                  Ir para carrinho
-                </a>
-
-              </div>
+              <p>
+                Segunda à Sexta
+              </p>
 
             </div>
 
           </div>
 
-        )
-      }
+          {/* SOCIAL */}
+          <div>
+
+            <h4 className="mb-6 text-lg font-semibold text-white">
+              Institucional
+            </h4>
+
+            <div className="flex flex-col gap-4">
+
+              <a href="#">
+                Instagram
+              </a>
+
+              <Link href="/sobre">
+                Nossa História
+              </Link>
+
+              <Link href="/contato">
+                Fale Conosco
+              </Link>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div className="mx-auto mt-20 max-w-7xl border-t border-white/10 pt-8 text-center text-sm text-[#b8aea4]">
+
+          © 2026 Aluria Premium. Todos os direitos reservados.
+
+        </div>
+
+      </footer>
 
     </main>
 
