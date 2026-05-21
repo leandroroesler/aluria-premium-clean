@@ -235,7 +235,7 @@ export default function Home() {
       </section>
 
       {/* EXPERIÊNCIA ALÚRIA */}
-      <section className="bg-[#f5efe8] px-10 py-28">
+      <section className="bg-[#f5efe8] px-10 py-24">
 
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
 
@@ -292,7 +292,7 @@ export default function Home() {
       </section>
 
       {/* DIFERENCIAIS */}
-      <section className="bg-white px-10 py-28">
+      <section className="bg-white px-10 py-24">
 
         <div className="mx-auto max-w-7xl">
 
@@ -381,7 +381,7 @@ export default function Home() {
       </section>
 
       {/* BANNER EMOCIONAL */}
-      <section className="relative h-[700px] overflow-hidden">
+      <section className="relative h-[600px] overflow-hidden">
 
         <img
           src="/images/vela2alecrim.jpeg"
@@ -424,25 +424,25 @@ export default function Home() {
       </section>
 
       {/* FOOTER PREMIUM */}
-      <footer className="bg-[#2d2218] px-10 py-28 text-[#d8cfc5]">
+      <footer className="bg-[#2d2218] px-10 py-20 text-[#d8cfc5]">
 
-        <div className="mx-auto grid max-w-7xl gap-20 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-2">
 
           {/* BRAND */}
-          <div className="max-w-xl">
+          <div className="max-w-lg">
 
-            <h3 className="mb-8 text-5xl font-semibold text-white">
+            <h3 className="mb-6 text-4xl font-semibold text-white">
               Aluria Premium
             </h3>
 
-            <div className="mb-8 h-[1px] w-20 bg-[#b89574]" />
+            <div className="mb-6 h-[1px] w-16 bg-[#b89574]" />
 
-            <p className="text-justify text-[22px] leading-[2.1] text-[#d8cfc5]">
+            <p className="text-justify text-[18px] leading-[1.9] text-[#d8cfc5]">
 
               Velas aromáticas premium desenvolvidas para transformar ambientes
               em experiências sofisticadas. Unimos fragrâncias exclusivas,
               produção artesanal e design minimalista para criar momentos
-              de bem-estar, conforto e elegância no seu dia a dia.
+              de bem-estar, conforto e elegância.
 
             </p>
 
@@ -451,15 +451,15 @@ export default function Home() {
           {/* INSTITUCIONAL */}
           <div className="flex justify-start lg:justify-end">
 
-            <div className="w-full max-w-sm">
+            <div className="w-full max-w-xs">
 
-              <h4 className="mb-8 text-4xl font-semibold text-white">
+              <h4 className="mb-6 text-3xl font-semibold text-white">
                 Institucional
               </h4>
 
-              <div className="mb-10 h-[1px] w-20 bg-[#b89574]" />
+              <div className="mb-8 h-[1px] w-16 bg-[#b89574]" />
 
-              <div className="flex flex-col gap-8 text-[24px] text-[#d8cfc5]">
+              <div className="flex flex-col gap-6 text-[20px] text-[#d8cfc5]">
 
                 <Link
                   href="/sobre"
@@ -477,15 +477,15 @@ export default function Home() {
 
               </div>
 
-              <div className="mt-12 border-t border-[#ffffff20] pt-10">
+              <div className="mt-10 border-t border-[#ffffff20] pt-8">
 
                 <a
                   href="https://wa.me/5548999567140"
                   target="_blank"
-                  className="flex items-center gap-4 text-[24px] text-[#d8cfc5] transition hover:text-white"
+                  className="flex items-center gap-3 text-[20px] text-[#d8cfc5] transition hover:text-white"
                 >
 
-                  <span className="text-3xl">
+                  <span className="text-2xl">
                     💬
                   </span>
 
@@ -503,7 +503,7 @@ export default function Home() {
 
         </div>
 
-        <div className="mx-auto mt-24 max-w-7xl border-t border-[#ffffff20] pt-10 text-center text-lg text-[#b8aea4]">
+        <div className="mx-auto mt-16 max-w-7xl border-t border-[#ffffff20] pt-8 text-center text-sm text-[#b8aea4]">
 
           © 2026 Aluria Premium. Todos os direitos reservados.
 
