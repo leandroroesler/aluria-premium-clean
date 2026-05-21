@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       // depois volte para:
       // "Aluria Premium <noreply@aluriapremium.com.br>"
 
-      from: "Aluria Premium <onboarding@resend.dev>",
+      from: "Aluria Premium <noreply@aluriapremium.com.br>",
 
       to: ["contato@aluriapremium.com.br"],
 
@@ -128,7 +128,7 @@ export async function POST(req: Request) {
     // ======================================================
 
     const customerEmail = await resend.emails.send({
-      from: "Aluria Premium <onboarding@resend.dev>",
+      from: "Aluria Premium <noreply@aluriapremium.com.br>",
 
       to: [email],
 
