@@ -49,7 +49,7 @@ export default function Carrinho() {
 
     /*
     =====================================
-    VALIDAR RETORNO REAL MP
+    QUERY PARAMS MP
     =====================================
     */
 
@@ -64,9 +64,12 @@ export default function Carrinho() {
     const collectionId =
       params.get("collection_id")
 
+    const paymentStatus =
+      params.get("status")
+
     /*
     =====================================
-    SEM RETORNO MP
+    SEM RETORNO REAL MP
     =====================================
     */
 
@@ -74,6 +77,25 @@ export default function Carrinho() {
       !paymentId &&
       !collectionId
     ) {
+
+      return
+
+    }
+
+    /*
+    =====================================
+    STATUS INVÁLIDO
+    =====================================
+    */
+
+    if (
+      paymentStatus !== "approved" &&
+      paymentStatus !== "pending"
+    ) {
+
+      console.log(
+        "Pagamento cancelado ou abandonado"
+      )
 
       return
 
@@ -244,7 +266,7 @@ export default function Carrinho() {
 
           <p className="text-[#6b5a4d] text-lg leading-relaxed">
 
-            Seu pagamento PIX foi recebido e estamos validando a confirmação com segurança.
+            Seu pagamento está sendo validado com segurança.
 
           </p>
 
@@ -340,7 +362,6 @@ export default function Carrinho() {
 
                         </div>
 
-                        {/* CONTROLES */}
                         <div className="flex items-center justify-between mt-8">
 
                           <div className="flex items-center gap-4">
@@ -383,7 +404,6 @@ export default function Carrinho() {
 
               </div>
 
-              {/* RESUMO */}
               <div className="bg-white rounded-[30px] p-8 h-fit sticky top-10">
 
                 <h2 className="text-3xl font-bold mb-10">
