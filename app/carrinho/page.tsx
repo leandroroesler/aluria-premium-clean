@@ -47,6 +47,38 @@ export default function Carrinho() {
 
     if (!storedOrderId) return
 
+    /*
+    =====================================
+    VALIDAR RETORNO REAL MP
+    =====================================
+    */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      )
+
+    const paymentId =
+      params.get("payment_id")
+
+    const collectionId =
+      params.get("collection_id")
+
+    /*
+    =====================================
+    SEM RETORNO MP
+    =====================================
+    */
+
+    if (
+      !paymentId &&
+      !collectionId
+    ) {
+
+      return
+
+    }
+
     setCheckingPayment(true)
 
     let isRedirecting = false
