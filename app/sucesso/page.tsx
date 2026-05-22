@@ -3,6 +3,7 @@
 import Link from "next/link"
 
 import {
+  Suspense,
   useEffect,
   useState,
 } from "react"
@@ -20,7 +21,7 @@ import {
   useCheckout,
 } from "@/context/CheckoutContext"
 
-export default function Sucesso() {
+function SuccessContent() {
 
   const router =
     useRouter()
@@ -270,6 +271,34 @@ export default function Sucesso() {
       </div>
 
     </main>
+
+  )
+
+}
+
+export default function Sucesso() {
+
+  return (
+
+    <Suspense
+      fallback={
+
+        <main className="min-h-screen bg-[#f5efe8] flex items-center justify-center">
+
+          <p className="text-[#2d2218] text-lg">
+
+            Carregando...
+
+          </p>
+
+        </main>
+
+      }
+    >
+
+      <SuccessContent />
+
+    </Suspense>
 
   )
 
