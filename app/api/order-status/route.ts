@@ -1,44 +1,106 @@
-import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { NextRequest, NextResponse } from "next/server"
+import { supabaseAdmin } from "@/lib/supabase-admin"
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest) {
-  try {
-    const { searchParams } = new URL(req.url);
 
-    const orderId = searchParams.get("order_id");
+  try {
+
+    const { searchParams } =
+      new URL(req.url)
+
+    const orderId =
+      searchParams.get("order_id")
 
     if (!orderId) {
+
       return NextResponse.json(
-        { error: "order_id obrigatório" },
-        { status: 400 }
-      );
+        {
+          error:
+            "order_id obrigatório",
+        },
+        {
+          status: 400,
+        }
+      )
+
     }
 
-    const { data, error } = await supabaseAdmin
-      .from("orders")
-      .select("*")
-      .eq("external_reference", orderId)
-      .single();
+    const { data, error } =
+      await supabaseAdmin
+        .from("orders")
+        .select("*")
+        .eq(
+          "external_reference",
+          orderId
+        )
+        .single()
 
     if (error || !data) {
+
       return NextResponse.json(
-        { error: "Pedido não encontrado" },
-        { status: 404 }
-      );
+        {
+          error:
+            "Pedido não encontrado",
+        },
+        {
+          status: 404,
+        }
+      )
+
+    }
+
+    /*
+    =====================================
+    VALIDAÇÃO CRÍTICA
+    =====================================
+    */
+
+    if (
+      data.payment_status !==
+      "approved"
+    ) {
+
+      return NextResponse.json(
+        {
+          error:
+            "Pagamento não aprovado",
+          payment_status:
+            data.payment_status,
+        },
+        {
+          status: 403,
+        }
+      )
+
     }
 
     return NextResponse.json({
+
       success: true,
+
       order: data,
-    });
+
+    })
+
   } catch (error) {
-    console.error("Erro ao consultar pedido:", error);
+
+    console.error(
+      "Erro ao consultar pedido:",
+      error
+    )
 
     return NextResponse.json(
-      { error: "Erro interno" },
-      { status: 500 }
-    );
+      {
+        error:
+          "Erro interno",
+      },
+      {
+        status: 500,
+      }
+    )
+
   }
+
 }

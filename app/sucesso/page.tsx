@@ -4,7 +4,13 @@ import Link from "next/link"
 
 import {
   useEffect,
+  useState,
 } from "react"
+
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation"
 
 import {
   useCart,
@@ -16,6 +22,17 @@ import {
 
 export default function Sucesso() {
 
+  const router =
+    useRouter()
+
+  const searchParams =
+    useSearchParams()
+
+  const orderId =
+    searchParams.get(
+      "external_reference"
+    )
+
   const {
     clearCart,
   } = useCart()
@@ -24,29 +41,163 @@ export default function Sucesso() {
     clearCheckoutData,
   } = useCheckout()
 
+  const [
+    loading,
+    setLoading,
+  ] = useState(true)
+
+  const [
+    authorized,
+    setAuthorized,
+  ] = useState(false)
+
   useEffect(() => {
 
-    console.log(
-      "Limpando carrinho..."
+    async function validateOrder() {
+
+      try {
+
+        /*
+        =====================================
+        SEM ORDER ID
+        =====================================
+        */
+
+        if (!orderId) {
+
+          router.push("/carrinho")
+
+          return
+
+        }
+
+        /*
+        =====================================
+        VALIDAR PEDIDO
+        =====================================
+        */
+
+        const response =
+          await fetch(
+            `/api/order-status?order_id=${orderId}`
+          )
+
+        /*
+        =====================================
+        PAGAMENTO NÃO APROVADO
+        =====================================
+        */
+
+        if (!response.ok) {
+
+          router.push("/carrinho")
+
+          return
+
+        }
+
+        const data =
+          await response.json()
+
+        /*
+        =====================================
+        VALIDAÇÃO FINAL
+        =====================================
+        */
+
+        if (
+          data?.order
+            ?.payment_status !==
+          "approved"
+        ) {
+
+          router.push("/carrinho")
+
+          return
+
+        }
+
+        /*
+        =====================================
+        LIMPEZA SEGURA
+        =====================================
+        */
+
+        clearCart()
+
+        clearCheckoutData()
+
+        localStorage.removeItem(
+          "aluria-cart"
+        )
+
+        localStorage.removeItem(
+          "aluria-checkout"
+        )
+
+        setAuthorized(true)
+
+      } catch (error) {
+
+        console.log(
+          "ERRO VALIDAR PEDIDO:",
+          error
+        )
+
+        router.push("/carrinho")
+
+      } finally {
+
+        setLoading(false)
+
+      }
+
+    }
+
+    validateOrder()
+
+  }, [
+    orderId,
+    router,
+    clearCart,
+    clearCheckoutData,
+  ])
+
+  /*
+  =====================================
+  LOADING
+  =====================================
+  */
+
+  if (loading) {
+
+    return (
+
+      <main className="min-h-screen bg-[#f5efe8] flex items-center justify-center">
+
+        <p className="text-[#2d2218] text-lg">
+
+          Validando pagamento...
+
+        </p>
+
+      </main>
+
     )
 
-    clearCart()
+  }
 
-    console.log(
-      "Limpando checkout..."
-    )
+  /*
+  =====================================
+  BLOQUEIO SEGURANÇA
+  =====================================
+  */
 
-    clearCheckoutData()
+  if (!authorized) {
 
-    localStorage.removeItem(
-      "aluria-cart"
-    )
+    return null
 
-    localStorage.removeItem(
-      "aluria-checkout"
-    )
-
-  }, [])
+  }
 
   return (
 
