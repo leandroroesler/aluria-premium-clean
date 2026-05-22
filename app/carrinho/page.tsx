@@ -27,13 +27,23 @@ export default function Carrinho() {
     clearCheckoutData,
   } = useCheckout()
 
-  const [checkingPayment, setCheckingPayment] =
-    useState(false)
+  const [
+    checkingPayment,
+    setCheckingPayment,
+  ] = useState(false)
+
+  /*
+  =====================================
+  VALIDAÇÃO PAGAMENTO
+  =====================================
+  */
 
   useEffect(() => {
 
     const storedOrderId =
-      localStorage.getItem("aluria-order-id")
+      localStorage.getItem(
+        "aluria-order-id"
+      )
 
     if (!storedOrderId) return
 
@@ -41,71 +51,136 @@ export default function Carrinho() {
 
     let isRedirecting = false
 
-    const interval = setInterval(async () => {
+    /*
+    =====================================
+    TIMEOUT SEGURANÇA
+    =====================================
+    */
 
-      try {
+    const timeout = setTimeout(() => {
 
-        const response = await fetch(
-          `/api/order-status?order_id=${storedOrderId}`,
-          {
-            cache: "no-store",
+      console.log(
+        "Timeout validação pagamento"
+      )
+
+      setCheckingPayment(false)
+
+    }, 15000)
+
+    const interval = setInterval(
+      async () => {
+
+        try {
+
+          const response =
+            await fetch(
+              `/api/order-status?order_id=${storedOrderId}`,
+              {
+                cache:
+                  "no-store",
+              }
+            )
+
+          /*
+          =====================================
+          PAGAMENTO NÃO APROVADO
+          =====================================
+          */
+
+          if (!response.ok) {
+
+            console.log(
+              "Pagamento não aprovado"
+            )
+
+            clearInterval(interval)
+
+            clearTimeout(timeout)
+
+            setCheckingPayment(false)
+
+            return
+
           }
-        )
 
-        if (!response.ok) return
+          const data =
+            await response.json()
 
-        const data = await response.json()
+          console.log(
+            "STATUS PEDIDO CARRINHO:",
+            data
+          )
 
-        console.log(
-          "STATUS PEDIDO CARRINHO:",
-          data
-        )
+          /*
+          =====================================
+          PAGAMENTO APROVADO
+          =====================================
+          */
 
-        if (
-          data?.order?.status === "approved" &&
-          !isRedirecting
-        ) {
+          if (
+            data?.order?.status ===
+              "approved" &&
+            !isRedirecting
+          ) {
 
-          isRedirecting = true
+            isRedirecting = true
+
+            clearInterval(interval)
+
+            clearTimeout(timeout)
+
+            clearCart()
+
+            clearCheckoutData()
+
+            localStorage.removeItem(
+              "aluria-order-id"
+            )
+
+            localStorage.removeItem(
+              "aluria-cart"
+            )
+
+            localStorage.removeItem(
+              "aluria-checkout"
+            )
+
+            setTimeout(() => {
+
+              router.push(
+                `/sucesso?external_reference=${storedOrderId}`
+              )
+
+            }, 300)
+
+          }
+
+        } catch (error) {
+
+          console.log(
+            "Erro polling carrinho:",
+            error
+          )
 
           clearInterval(interval)
 
-          clearCart()
+          clearTimeout(timeout)
 
-          clearCheckoutData()
-
-          localStorage.removeItem(
-            "aluria-order-id"
-          )
-
-          localStorage.removeItem(
-            "aluria-cart"
-          )
-
-          localStorage.removeItem(
-            "aluria-checkout"
-          )
-
-          setTimeout(() => {
-
-            router.push("/sucesso")
-
-          }, 300)
+          setCheckingPayment(false)
 
         }
 
-      } catch (error) {
+      },
+      1000
+    )
 
-        console.log(
-          "Erro polling carrinho:",
-          error
-        )
+    return () => {
 
-      }
+      clearInterval(interval)
 
-    }, 1000)
+      clearTimeout(timeout)
 
-    return () => clearInterval(interval)
+    }
 
   }, [
     clearCart,
@@ -113,67 +188,11 @@ export default function Carrinho() {
     router,
   ])
 
-  async function finalizarCompra() {
-
-    try {
-
-      const items = cart.map(item => ({
-
-        title: item.title,
-
-        quantity: item.quantity,
-
-        currency_id: "BRL",
-
-        unit_price: item.price,
-
-      }))
-
-      const response = await fetch(
-        "/api/create-preference",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ items }),
-        }
-      )
-
-      const data = await response.json()
-
-      if (
-        data.init_point &&
-        data.order_id
-      ) {
-
-        localStorage.setItem(
-          "aluria-order-id",
-          data.order_id
-        )
-
-        window.location.href =
-          data.init_point
-
-      } else {
-
-        alert(
-          "Erro ao gerar checkout"
-        )
-
-      }
-
-    } catch (error) {
-
-      console.log(error)
-
-      alert(
-        "Erro ao finalizar compra"
-      )
-
-    }
-
-  }
+  /*
+  =====================================
+  TELA CONFIRMAÇÃO
+  =====================================
+  */
 
   if (checkingPayment) {
 
