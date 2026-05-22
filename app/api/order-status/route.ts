@@ -13,10 +13,17 @@ export async function GET(req: NextRequest) {
     const orderId =
       searchParams.get("order_id")
 
+    /*
+    =====================================
+    ORDER ID OBRIGATÓRIO
+    =====================================
+    */
+
     if (!orderId) {
 
       return NextResponse.json(
         {
+          success: false,
           error:
             "order_id obrigatório",
         },
@@ -26,6 +33,12 @@ export async function GET(req: NextRequest) {
       )
 
     }
+
+    /*
+    =====================================
+    CONSULTAR PEDIDO
+    =====================================
+    */
 
     const { data, error } =
       await supabaseAdmin
@@ -37,10 +50,17 @@ export async function GET(req: NextRequest) {
         )
         .single()
 
+    /*
+    =====================================
+    PEDIDO NÃO ENCONTRADO
+    =====================================
+    */
+
     if (error || !data) {
 
       return NextResponse.json(
         {
+          success: false,
           error:
             "Pedido não encontrado",
         },
@@ -53,28 +73,9 @@ export async function GET(req: NextRequest) {
 
     /*
     =====================================
-    VALIDAÇÃO CRÍTICA
+    RETORNO COMPLETO DO PEDIDO
     =====================================
     */
-
-    if (
-      data.payment_status !==
-      "approved"
-    ) {
-
-      return NextResponse.json(
-        {
-          error:
-            "Pagamento não aprovado",
-          payment_status:
-            data.payment_status,
-        },
-        {
-          status: 403,
-        }
-      )
-
-    }
 
     return NextResponse.json({
 
@@ -93,6 +94,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(
       {
+        success: false,
         error:
           "Erro interno",
       },

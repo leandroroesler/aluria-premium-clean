@@ -214,11 +214,12 @@ export function CartProvider({
 
   function clearCart() {
 
-    localStorage.removeItem(
-      "aluria-cart"
-    )
-
     setCart([])
+
+    window.localStorage.setItem(
+      "aluria-cart",
+      JSON.stringify([])
+    )
 
   }
 

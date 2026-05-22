@@ -167,12 +167,15 @@ export function CheckoutProvider({
 
   function clearCheckoutData() {
 
-    localStorage.removeItem(
-      "aluria-checkout"
-    )
-
     setCheckoutData(
       initialCheckoutData
+    )
+
+    window.localStorage.setItem(
+      "aluria-checkout",
+      JSON.stringify(
+        initialCheckoutData
+      )
     )
 
   }
