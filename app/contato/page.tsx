@@ -110,6 +110,15 @@ export default function ContatoPage() {
             Enviar E-mail
           </a>
             </div>
+
+          <div className="mt-8 overflow-hidden rounded-[28px]">
+            <img
+              src="/images/vela-contato.png"
+              alt="Vela aromática Alúria Premium"
+              className="h-[390px] w-full object-cover object-top"
+            />
+          </div>
+
             </div>
           </div>
 
