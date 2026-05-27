@@ -105,7 +105,7 @@ export default function ContatoPage() {
 
           <a
             href="mailto:contato@aluriapremium.com.br"
-            className="inline-flex rounded-full border border-black px-6 py-3 text-sm text-black transition hover:bg-black hover:text-white"
+            className="inline-flex rounded-full bg-black px-6 py-3 text-sm text-white transition hover:opacity-90"
             >
             Enviar E-mail
           </a>
