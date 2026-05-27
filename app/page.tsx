@@ -151,13 +151,13 @@ export default function Home() {
       </header>
 
       {/* HERO */}
-      <section className="flex h-screen flex-col items-center justify-center px-6 text-center">
+      <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
 
         <p className="mb-6 text-sm uppercase tracking-[0.3em] text-[#8a7768]">
           Velas Aromáticas Premium
         </p>
 
-        <h1 className="mb-8 text-6xl font-bold md:text-8xl">
+        <h1 className="mb-8 text-4xl font-semibold md:text-5xl">
           Aluria Premium
         </h1>
 
@@ -177,7 +177,7 @@ export default function Home() {
       {/* PRODUTOS */}
       <section
         id="colecoes"
-        className="bg-white px-10 py-24"
+        className="bg-white px-10 pt-14 pb-16"
       >
 
         <div className="mb-20 text-center">
