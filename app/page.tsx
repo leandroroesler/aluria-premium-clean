@@ -470,6 +470,13 @@ export default function Home() {
               WhatsApp
             </a>
 
+            <a
+              href="mailto:contato@aluriapremium.com.br"
+              className="transition hover:text-white"
+            >
+              E-mail
+            </a>
+
           </div>
 
           <div className="mt-14 w-full border-t border-[#ffffff15] pt-8 text-sm text-[#b8aea4]">
