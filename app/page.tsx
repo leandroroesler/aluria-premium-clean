@@ -151,15 +151,7 @@ export default function Home() {
       </header>
 
       {/* HERO */}
-      <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
-
-        <p className="mb-6 text-sm uppercase tracking-[0.3em] text-[#8a7768]">
-          Velas Aromáticas Premium
-        </p>
-
-        <h1 className="mb-8 text-4xl font-semibold md:text-5xl">
-          Aluria Premium
-        </h1>
+      <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 pt-36 text-center">
 
         <p className="max-w-3xl text-xl leading-relaxed text-[#6b5a4d] md:text-2xl">
           Transformando ambientes em experiências sofisticadas através de fragrâncias exclusivas e design elegante.
