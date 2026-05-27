@@ -93,14 +93,23 @@ export default function ContatoPage() {
                 sobre pedidos.
               </p>
 
-              <a
-                href="https://wa.me/5548999567140"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex rounded-full bg-black px-6 py-3 text-sm text-white transition hover:opacity-90"
+              <div className="flex flex-wrap gap-3">
+          <a
+              href="https://wa.me/5548999567140"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex rounded-full bg-black px-6 py-3 text-sm text-white transition hover:opacity-90"
               >
-                Conversar no WhatsApp
-              </a>
+              Conversar no WhatsApp
+          </a>
+
+          <a
+            href="mailto:contato@aluriapremium.com.br"
+            className="inline-flex rounded-full border border-black px-6 py-3 text-sm text-black transition hover:bg-black hover:text-white"
+            >
+            Enviar E-mail
+          </a>
+            </div>
             </div>
           </div>
 
