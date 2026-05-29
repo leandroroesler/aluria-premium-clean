@@ -123,11 +123,15 @@ export function CheckoutProvider({
 
     if (storedData) {
 
-      setCheckoutData(
-        JSON.parse(storedData)
-      )
+    setCheckoutData({
 
-    }
+    ...initialCheckoutData,
+
+    ...JSON.parse(storedData),
+
+  })
+
+}
 
     setHydrated(true)
 
