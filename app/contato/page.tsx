@@ -86,13 +86,13 @@ export default function ContatoPage() {
               Na Aluria Premium, cada detalhe é pensado para transformar ambientes e momentos em experiências memoráveis.
               Nossa equipe está disponível para esclarecer dúvidas, auxiliar em compras, indicar fragrâncias e desenvolver soluções personalizadas para ocasiões especiais. 
               Também atendemos pedidos corporativos, eventos, lembranças exclusivas e encomendas em maiores quantidades. Consulte condições comerciais, prazos de produção e entrega para projetos sob medida.
+            </p>  
+            
+            <p className="mb-2 text-lg leading-relaxed text-neutral-600">
+
+              Entre em contato conosco para descobrir como podemos ajudar a criar atmosferas únicas e experiências marcantes.
 
             </p>
-
-            <div className="space-y-4 text-neutral-700">
-              <p>
-                Entre em contato conosco para descobrir como podemos ajudar a criar atmosferas únicas e inesquecíveis com nossas velas aromáticas premium.
-              </p>
 
               <div className="flex flex-wrap gap-3">
           <a
