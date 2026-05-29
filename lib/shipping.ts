@@ -30,3 +30,27 @@ export const shippingByState: Record<string, number> = {
   AC: 50,
   TO: 45,
 }
+
+export function calculateShipping(
+  state: string,
+  totalItems: number
+) {
+  const baseShipping =
+    shippingByState[state] || 0
+
+  let multiplier = 1
+
+if (totalItems > 2) {
+
+  const extraFaixas =
+    Math.floor((totalItems - 3) / 2) + 1
+
+  multiplier =
+    1 + extraFaixas * 0.25
+
+}
+
+  return Number(
+    (baseShipping * multiplier).toFixed(2)
+  )
+}

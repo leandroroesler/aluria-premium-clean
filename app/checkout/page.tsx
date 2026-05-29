@@ -11,7 +11,10 @@ import { useRouter } from "next/navigation"
 import { useCheckout } from "../../context/CheckoutContext"
 import { useCart } from "../../context/CartContext"
 
-import { shippingByState } from "../../lib/shipping"
+import {
+  shippingByState,
+  calculateShipping,
+} from "../../lib/shipping"
 
 export default function Checkout() {
 
@@ -24,6 +27,7 @@ export default function Checkout() {
   const {
   cart,
   subtotal,
+  totalItems,
   clearCart,
   removeFromCart,
   increaseQuantity,
@@ -83,12 +87,15 @@ export default function Checkout() {
 
   const shipping =
 
-  state === "SC" &&
-  freeShippingCities.includes(city)
+state === "SC" &&
+freeShippingCities.includes(city)
 
-    ? 0
+  ? 0
 
-    : shippingByState[state] || 0
+  : calculateShipping(
+      state,
+      totalItems
+    )
 
   console.log(
   "FRETE CALCULADO:",
@@ -112,6 +119,7 @@ export default function Checkout() {
   checkoutData.state,
   checkoutData.shipping,
   checkoutData.shippingState,
+  totalItems,
   updateCheckoutData,
 ])
 
