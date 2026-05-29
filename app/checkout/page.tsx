@@ -680,7 +680,7 @@ export default function Checkout() {
   <span>Frete</span>
 
   <span>
-    R$ {checkoutData.shipping.toFixed(2)}
+    R$ {(checkoutData.shipping ?? 0).toFixed(2)}
   </span>
 </div>
 
@@ -693,7 +693,7 @@ export default function Checkout() {
     </span>
 
     <span className="text-3xl font-bold text-[#2d2218]">
-      R$ {(subtotal + checkoutData.shipping).toFixed(2)}
+      R$ {(subtotal + (checkoutData.shipping ?? 0)).toFixed(2)}
     </span>
 
   </div>
