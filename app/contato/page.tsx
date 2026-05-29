@@ -121,7 +121,6 @@ export default function ContatoPage() {
           </div>
 
             </div>
-          </div>
 
           <div className="rounded-3xl bg-white p-8 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-5">
