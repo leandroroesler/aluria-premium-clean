@@ -36,6 +36,10 @@ interface CheckoutData {
 
   instructions: string
 
+  shipping: number
+
+  shippingState: string
+
 }
 
 interface CheckoutContextType {
@@ -77,6 +81,10 @@ const initialCheckoutData: CheckoutData = {
   state: "",
 
   instructions: "",
+
+  shipping: 0,
+
+  shippingState: "",
 
 }
 

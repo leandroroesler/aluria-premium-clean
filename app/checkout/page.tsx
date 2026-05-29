@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation"
 import { useCheckout } from "../../context/CheckoutContext"
 import { useCart } from "../../context/CartContext"
 
+import { shippingByState } from "../../lib/shipping"
+
 export default function Checkout() {
 
   const {
@@ -32,6 +34,86 @@ export default function Checkout() {
 
   const [isCheckingPayment, setIsCheckingPayment] =
     useState(false)
+
+  useEffect(() => {
+
+  const state =
+    checkoutData.state
+      .trim()
+      .toUpperCase()
+
+  const city =
+    checkoutData.city
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toUpperCase()
+
+  const freeShippingCities = [
+
+    "FLORIANOPOLIS",
+
+    "SAO JOSE",
+
+    "PALHOCA",
+
+    "BIGUACU",
+
+    "SANTO AMARO DA IMPERATRIZ",
+
+]
+
+  if (!state) {
+
+    if (
+      checkoutData.shipping !== 0 ||
+      checkoutData.shippingState !== ""
+    ) {
+
+      updateCheckoutData({
+        shipping: 0,
+        shippingState: "",
+      })
+
+    }
+
+    return
+
+  }
+
+  const shipping =
+
+  state === "SC" &&
+  freeShippingCities.includes(city)
+
+    ? 0
+
+    : shippingByState[state] || 0
+
+  console.log(
+  "FRETE CALCULADO:",
+  state,
+  shipping
+)
+
+  if (
+    shipping !== checkoutData.shipping ||
+    state !== checkoutData.shippingState
+  ) {
+
+    updateCheckoutData({
+      shipping,
+      shippingState: state,
+    })
+
+  }
+
+}, [
+  checkoutData.state,
+  checkoutData.shipping,
+  checkoutData.shippingState,
+  updateCheckoutData,
+])
 
 
   useEffect(() => {
@@ -439,17 +521,49 @@ export default function Checkout() {
                   className="w-full border border-[#d6c8ba] rounded-2xl px-5 py-4 outline-none"
                 />
 
-                <input
-                  type="text"
-                  placeholder="Estado"
+                <select
                   value={checkoutData.state}
                   onChange={(e) =>
-                    updateCheckoutData({
-                      state: e.target.value,
-                    })
-                  }
-                  className="w-full border border-[#d6c8ba] rounded-2xl px-5 py-4 outline-none"
-                />
+                  updateCheckoutData({
+                    state: e.target.value,
+                })
+             }
+            className="w-full border border-[#d6c8ba] rounded-2xl px-5 py-4 outline-none bg-white"
+        >
+
+            <option value="">
+              Selecione o estado
+            </option>
+
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+
+        </select>
 
               </div>
 
@@ -563,11 +677,12 @@ export default function Checkout() {
     </div>
 
     <div className="flex justify-between text-[#5c4634]">
-      <span>Frete</span>
-      <span className="text-green-700">
-        Grátis
-      </span>
-    </div>
+  <span>Frete</span>
+
+  <span>
+    R$ {checkoutData.shipping.toFixed(2)}
+  </span>
+</div>
 
   </div>
 
@@ -578,7 +693,7 @@ export default function Checkout() {
     </span>
 
     <span className="text-3xl font-bold text-[#2d2218]">
-      R$ {subtotal.toFixed(2)}
+      R$ {(subtotal + checkoutData.shipping).toFixed(2)}
     </span>
 
   </div>

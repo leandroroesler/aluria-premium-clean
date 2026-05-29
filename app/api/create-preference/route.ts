@@ -70,6 +70,11 @@ export async function POST(
 
     } = body
 
+    console.log(
+      "FRETE RECEBIDO:",
+      customer?.shipping
+  )
+
     if (
       !items ||
       items.length === 0
@@ -122,32 +127,52 @@ export async function POST(
 
     const preferenceData = {
 
-      items: items.map(
-        (item: any) => ({
+      items: [
 
-          id: item.id,
+  ...items.map(
+    (item: any) => ({
 
-          title: item.title,
+      id: item.id,
 
-          quantity:
-            Number(item.quantity),
+      title: item.title,
 
-          /*
-          =====================================
-          CORREÇÃO DEFINITIVA
-          =====================================
-          */
+      quantity:
+        Number(item.quantity),
+
+      unit_price:
+        Number(
+          item.unit_price
+        ),
+
+      currency_id:
+        "BRL",
+
+    })
+  ),
+
+  ...(customer?.shipping > 0
+    ? [
+        {
+
+          id: "shipping",
+
+          title: "Frete",
+
+          quantity: 1,
 
           unit_price:
             Number(
-              item.unit_price
+              customer.shipping
             ),
 
           currency_id:
             "BRL",
 
-        })
-      ),
+        },
+      ]
+    : []),
+
+],
 
       payer: {
 
