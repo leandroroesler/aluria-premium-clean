@@ -71,12 +71,9 @@ export default function ContatoPage() {
     <>
       <PremiumHeader />
 
-      <main className="min-h-screen bg-[#f8f5f1] px-6 py-20">
-        <div className="mx-auto grid max-w-6xl gap-12 pt-10 lg:grid-cols-2">
+      <main className="min-h-screen bg-[#f8f5f1] px-6 py-10">
+        <div className="mx-auto grid max-w-6xl gap-12 pt-4 lg:grid-cols-2">
           <div>
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-neutral-500">
-              Aluria Premium
-            </p>
 
             <h1 className="mb-6 text-4xl font-light text-neutral-900">
               Entre em contato
