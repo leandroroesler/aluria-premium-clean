@@ -91,8 +91,7 @@ export default function ContatoPage() {
 
             <div className="space-y-4 text-neutral-700">
               <p>
-                Atendimento personalizado para dúvidas, suporte e informações
-                sobre pedidos.
+                Entre em contato conosco para descobrir como podemos ajudar a criar atmosferas únicas e inesquecíveis com nossas velas aromáticas premium.
               </p>
 
               <div className="flex flex-wrap gap-3">
