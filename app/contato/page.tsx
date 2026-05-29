@@ -83,8 +83,10 @@ export default function ContatoPage() {
             </h1>
 
             <p className="mb-6 text-lg leading-relaxed text-neutral-600">
-              Estamos disponíveis para esclarecer dúvidas, auxiliar em pedidos
-              especiais e tornar sua experiência ainda mais sofisticada.
+              Na Aluria Premium, cada detalhe é pensado para transformar ambientes e momentos em experiências memoráveis.
+              Nossa equipe está disponível para esclarecer dúvidas, auxiliar em compras, indicar fragrâncias e desenvolver soluções personalizadas para ocasiões especiais. 
+              Também atendemos pedidos corporativos, eventos, lembranças exclusivas e encomendas em maiores quantidades. Consulte condições comerciais, prazos de produção e entrega para projetos sob medida.
+
             </p>
 
             <div className="space-y-4 text-neutral-700">
