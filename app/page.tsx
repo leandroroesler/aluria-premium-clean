@@ -484,39 +484,63 @@ export default function Home() {
       {/* MODAL PRODUTO */}
       {product && (
 
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-6">
+        <div
+          className="
+            fixed
+            inset-0
+            z-50
+            flex
+            items-center
+            justify-center
+            overflow-y-auto
+           bg-black/50
+            backdrop-blur-sm
+            p-4
+          "
+         >
 
-          <div className="relative w-full max-w-5xl rounded-[28px] bg-white">
+          <div className="relative w-full max-w-[380px] max-h-[90vh] overflow-y-auto rounded-[28px] bg-white shadow-2xl">
 
             <button
               onClick={() => setOpenProduct("")}
-              className="absolute right-6 top-6 z-50 text-3xl text-[#2d2218]"
+              className="
+              absolute
+              right-5
+              top-5
+              z-50
+              flex
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-full
+            bg-white
+              shadow-md
+              text-2xl
+            text-[#2d2218]
+        "
             >
               ×
             </button>
 
-            <div className="grid items-center lg:grid-cols-[0.85fr_1.15fr]">
+            <div className="flex flex-col">
 
-              <div className="flex items-center justify-center bg-[#f8f4ef] p-6">
+              <div className="bg-white">
 
-                <img
-                  src={product.image}
-                  className="max-h-[520px] w-auto object-contain"
-                />
+              <img
+                src={product.image}
+                className="w-full h-auto object-contain"
+              />
 
-              </div>
+          </div>
 
-              <div className="flex flex-col justify-center p-6 lg:p-8">
+              <div className="p-5">
 
-                <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#8a7768]">
-                  Coleção Signature
-                </p>
-
-                <h2 className="mb-5 text-4xl font-bold leading-tight text-[#2d2218]">
+                <h2 className="mb-3 text-2xl font-bold text-[#2d2218]">
                   {product.title}
                 </h2>
 
-                <p className="mb-8 text-lg leading-relaxed text-[#6b5a4d]">
+                <p className="mb-6 leading-relaxed text-[#6b5a4d]">
                   {product.description}
                 </p>
 
@@ -532,45 +556,27 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
-
-                    <div>
-                      <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
-                        Duração
-                      </h4>
-
-                      <p className="text-[#6b5a4d]">
-                        {product.duration}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
-                        Peso
-                      </h4>
-
-                      <p className="text-[#6b5a4d]">
-                        {product.weight}
-                      </p>
-                    </div>
-
-                  </div>
-
                   <div>
-                    <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
-                      Ambientes
-                    </h4>
 
-                    <p className="leading-relaxed text-[#6b5a4d]">
-                      {product.environment}
-                    </p>
+                    <div>
+
+                      <h4 className="mb-2 text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                        Especificações
+                      </h4>
+
+                      <p className="text-[#6b5a4d]">
+                        {product.weight} • {product.duration}
+                      </p>
+
+                    </div>
+
                   </div>
 
                 </div>
 
                 <div className="mb-8 flex items-center justify-between">
 
-                  <span className="text-3xl font-bold text-[#2d2218]">
+                  <span className="text-2xl font-bold text-[#2d2218]">
                     R$ {product.price.toFixed(2)}
                   </span>
 
@@ -579,30 +585,28 @@ export default function Home() {
                 <button
                   onClick={() => {
 
-                    addToCart({
-                      id: openProduct,
-                      title: product.title,
-                      price: product.price,
-                      image: product.image,
-                      quantity: 1,
-                    });
+                      addToCart({
+                        id: openProduct,
+                        title: product.title,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1,
+                });
 
-                    setCartSuccessOpen(true);
+                setCartSuccessOpen(true);
 
-                    setTimeout(() => {
-                      setCartSuccessOpen(false);
-                    }, 2500);
-                  }}
-                  className="w-full rounded-full bg-[#2d2218] px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-90"
-                >
-
-                  Adicionar ao Carrinho
-
-                </button>
+                setTimeout(() => {
+                  setCartSuccessOpen(false);
+                }, 2500);
+        }}
+        className="w-full rounded-full bg-[#2d2218] py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-90"
+    >
+        Adicionar ao Carrinho
+    </button>
 
                 <a
                   href="/checkout"
-                  className="mt-3 w-full rounded-full border border-[#2d2218] px-8 py-4 text-center text-sm uppercase tracking-[0.2em] text-[#2d2218] transition hover:bg-[#2d2218] hover:text-white"
+                  className="mt-3 block w-full rounded-full border border-[#2d2218] py-4 text-center text-sm uppercase tracking-[0.2em] text-[#2d2218] transition hover:bg-[#2d2218] hover:text-white"
                 >
 
                   Finalizar Compra
