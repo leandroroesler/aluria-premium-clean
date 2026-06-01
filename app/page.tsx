@@ -72,6 +72,20 @@ export default function Home() {
       image: "/images/Cha_Branco_Roma.PNG",
     },
 
+    cerejaeavela: {
+      title: "Cereja & Avelã",
+      price: 39.90,
+      description:
+        "Delicada, envolvente e sofisticada. A combinação do toque frutado da cereja com a cremosidade suave da avelã cria uma atmosfera acolhedora, elegante e irresistivelmente confortável.",
+      notes:
+        "Saída: cereja madura e nuances frutadas delicadas. Corpo: amêndoas suaves e acordes cremosos de avelã. Fundo: baunilha aveludada, musk branco e madeiras leves.",
+      duration: "20 a 25 horas de queima",
+      weight: "100g",
+      environment:
+        "Quartos, salas de estar, lounges, closets e ambientes sofisticados que valorizam sensações de conforto, bem-estar e acolhimento através de uma fragrância envolvente e elegante.",
+      image: "/images/Cereja_e_Avela.png",
+    },
+
   };
 
   const product =
