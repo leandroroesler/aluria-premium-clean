@@ -91,7 +91,7 @@ export default function ContatoPage() {
 
             </p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-3">
           <a
               href="https://wa.me/5548999567140"
               target="_blank"
