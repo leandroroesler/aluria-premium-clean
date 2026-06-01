@@ -329,7 +329,7 @@ export default function Home() {
                 Produção Artesanal
               </h3>
 
-              <p className="leading-relaxed text-[#6b5a4d]">
+              <p className="leading-relaxed text-[#6b5a4d] text-justify">
                 Velas produzidas com cuidado em cada detalhe para proporcionar experiências sofisticadas e memoráveis.
               </p>
 
@@ -345,7 +345,7 @@ export default function Home() {
                 Fragrâncias Exclusivas
               </h3>
 
-              <p className="leading-relaxed text-[#6b5a4d]">
+              <p className="leading-relaxed text-[#6b5a4d] text-justify">
                 Combinações olfativas desenvolvidas para criar ambientes acolhedores, elegantes e sofisticados.
               </p>
 
@@ -361,7 +361,7 @@ export default function Home() {
                 Entrega Segura
               </h3>
 
-              <p className="leading-relaxed text-[#6b5a4d]">
+              <p className="leading-relaxed text-[#6b5a4d] text-justify">
                 Embalagens cuidadosas e processo de envio pensado para garantir proteção e excelência.
               </p>
 
@@ -377,7 +377,7 @@ export default function Home() {
                 Pagamento Seguro
               </h3>
 
-              <p className="leading-relaxed text-[#6b5a4d]">
+              <p className="leading-relaxed text-[#6b5a4d] text-justify">
                 Ambiente protegido e pagamentos processados com segurança para uma experiência tranquila.
               </p>
 
@@ -554,7 +554,7 @@ export default function Home() {
                   {product.title}
                 </h2>
 
-                <p className="mb-6 leading-relaxed text-[#6b5a4d]">
+                <p className="mb-6 leading-relaxed text-[#6b5a4d] text-justify">
                   {product.description}
                 </p>
 
@@ -565,7 +565,7 @@ export default function Home() {
                       Notas Olfativas
                     </h4>
 
-                    <p className="leading-relaxed text-[#6b5a4d]">
+                    <p className="leading-relaxed text-[#6b5a4d] text-justify">
                       {product.notes}
                     </p>
                   </div>
