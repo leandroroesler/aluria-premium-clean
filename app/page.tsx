@@ -11,6 +11,8 @@ export default function Home() {
 
   const [openProduct, setOpenProduct] = useState("");
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const [cartSuccessOpen, setCartSuccessOpen] =
     useState(false);
 
@@ -98,7 +100,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#f5efe8] text-[#2d2218]">
 
       {/* HEADER */}
-      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-10 py-8">
+      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-4 md:px-10 py-6 md:py-8">
 
         <div className="flex items-center">
 
@@ -108,15 +110,18 @@ export default function Home() {
             width={420}
             height={140}
             priority
-            className="object-contain"
-            style={{
-              width: "300px",
-              height: "auto",
-            }}
-          />
+            className="object-contain w-[220px] md:w-[300px] h-auto"
+        />
 
         </div>
 
+        <button
+          onClick={() => setMenuOpen(true)}
+          className="text-3xl md:hidden"
+        >
+        ☰
+    </button>
+        
         <nav className="hidden gap-8 text-sm uppercase tracking-[0.2em] md:flex">
 
           <a href="#" className="transition hover:opacity-70">
@@ -163,6 +168,57 @@ export default function Home() {
         </a>
 
       </header>
+
+      {menuOpen && (
+
+  <div className="fixed inset-0 z-[999] bg-[#f8f4ef]">
+
+    <button
+      onClick={() => setMenuOpen(false)}
+      className="absolute right-6 top-6 text-4xl text-[#2d2218]"
+    >
+      ×
+    </button>
+
+    <div className="flex h-full flex-col items-center justify-center gap-10">
+
+      <a
+        href="#"
+        onClick={() => setMenuOpen(false)}
+        className="text-xl uppercase tracking-[0.3em]"
+      >
+        Home
+      </a>
+
+      <a
+        href="#colecoes"
+        onClick={() => setMenuOpen(false)}
+        className="text-xl uppercase tracking-[0.3em]"
+      >
+        Coleções
+      </a>
+
+      <Link
+        href="/sobre"
+        onClick={() => setMenuOpen(false)}
+        className="text-xl uppercase tracking-[0.3em]"
+      >
+        Sobre
+      </Link>
+
+      <Link
+        href="/contato"
+        onClick={() => setMenuOpen(false)}
+        className="text-xl uppercase tracking-[0.3em]"
+      >
+        Contato
+      </Link>
+
+    </div>
+
+  </div>
+
+)}
 
       {/* HERO */}
       <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 pt-36 text-center">
