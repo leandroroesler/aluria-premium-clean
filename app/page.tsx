@@ -100,7 +100,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#f5efe8] text-[#2d2218]">
 
       {/* HEADER */}
-      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-4 md:px-10 py-6 md:py-8">
+      <header className="absolute left-0 top-0 z-50 flex w-full items-center justify-between px-6 md:px-10 py-6 md:py-8">
 
         <div className="flex items-center">
 
@@ -158,7 +158,7 @@ export default function Home() {
           className="relative flex items-center transition hover:scale-105"
         >
 
-          <span className="text-2xl">
+          <span className="text-3xl">
             🛒
           </span>
 
