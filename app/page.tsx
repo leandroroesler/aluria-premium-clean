@@ -88,6 +88,20 @@ export default function Home() {
       image: "/images/Cereja_e_Avela.png",
     },
 
+    lavanda: {
+      title: "Lavanda",
+      price: 39.90,
+      description:
+        "Serena, elegante e reconfortante. As notas aromáticas da lavanda criam uma atmosfera de tranquilidade e bem-estar, perfeita para momentos de relaxamento e equilíbrio.",
+      notes:
+        "Saída: notas herbais frescas e lavanda provençal. Corpo: lavanda floral e nuances aromáticas suaves. Fundo: musk branco e madeiras delicadas.",
+      duration: "20 a 25 horas de queima",
+      weight: "100g",
+      environment:
+        "Quartos, salas de descanso, espaços de leitura, spas e ambientes que valorizam serenidade, conforto e bem-estar.",
+      image: "/images/Lavanda 3.png",
+},
+
   };
 
   const product =
