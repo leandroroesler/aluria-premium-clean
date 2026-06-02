@@ -239,7 +239,7 @@ export default function Home() {
       <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 pt-36 text-center">
 
         <p className="max-w-3xl text-xl leading-relaxed text-[#6b5a4d] md:text-2xl">
-          Transformando ambientes em experiências sofisticadas através de fragrâncias exclusivas e design elegante.
+          Velas aromáticas artesanais criadas para proporcionar conforto, elegância e bem-estar em cada momento.
         </p>
 
         <a
@@ -337,22 +337,19 @@ export default function Home() {
 
             <h2 className="mb-6 text-3xl md:text-[52px] font-bold leading-tight text-[#2d2218]">
 
-              Fragrâncias desenvolvidas para transformar ambientes em experiências sofisticadas.
+              Mais do que fragrâncias. Uma experiência sensorial completa.
 
             </h2>
 
             <p className="mb-6 text-[17px] leading-8 text-[#6b5a4d] text-justify">
 
-              Cada vela da Alúria Premium é produzida para criar atmosferas acolhedoras,
-              elegantes e memoráveis. Uma combinação entre design minimalista,
-              fragrâncias exclusivas e momentos de bem-estar.
+              Na Alúria Premium, cada vela é desenvolvida para unir fragrância, design e bem-estar em uma experiência única. Criamos peças que elevam a atmosfera dos ambientes e tornam momentos simples mais especiais.
 
             </p>
 
             <p className="mb-10 text-lg leading-relaxed text-[#6b5a4d] text-justify">
 
-              Desenvolvemos composições olfativas sofisticadas que elevam a experiência
-              dos ambientes e traduzem conforto, elegância e personalidade.
+              Da seleção das essências ao acabamento artesanal, cada detalhe é pensado para proporcionar conforto, autenticidade e elegância em cada ambiente.
 
             </p>
 
@@ -389,9 +386,7 @@ export default function Home() {
       </h2>
 
       <p className="mx-auto max-w-3xl text-lg md:text-xl leading-relaxed text-[#6b5a4d]">
-        Utilizamos cera de coco premium para proporcionar uma queima mais limpa,
-        melhor difusão das fragrâncias e uma experiência sensorial superior em
-        cada vela.
+        Utilizamos cera de coco premium para proporcionar uma queima mais limpa, melhor desempenho aromático e uma experiência sensorial superior em cada detalhe.
       </p>
 
     </div>
@@ -532,6 +527,10 @@ export default function Home() {
 
         </table>
 
+        <div className="mt-12 text-center">
+
+        </div>
+
       </div>
 
     </div>
@@ -541,10 +540,9 @@ export default function Home() {
 
       <p className="text-lg md:text-xl leading-relaxed text-[#6b5a4d]">
 
-        Na Alúria Premium, cada detalhe importa. Desde a seleção das
-        fragrâncias até a escolha da cera de coco premium, desenvolvemos velas
-        que transformam momentos simples em experiências sofisticadas,
-        acolhedoras e memoráveis.
+        Cada vela Alúria é desenvolvida para unir fragrâncias exclusivas,
+        design elegante e cera de coco premium em uma experiência sensorial
+        criada para transformar momentos simples em ocasiões especiais.
 
       </p>
 
@@ -567,7 +565,7 @@ export default function Home() {
             </p>
 
             <h2 className="text-5xl font-bold text-[#2d2218]">
-              Sofisticação em cada detalhe
+              O cuidado está nos detalhes
             </h2>
 
           </div>
@@ -597,11 +595,12 @@ export default function Home() {
               </div>
 
               <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
-                Fragrâncias Exclusivas
-              </h3>
+                  Cera de Coco Premium
+                </h3>
 
               <p className="leading-relaxed text-[#6b5a4d] text-justify">
-                Combinações olfativas desenvolvidas para criar ambientes acolhedores, elegantes e sofisticados.
+                Utilizamos cera de coco premium para proporcionar uma queima mais limpa,
+                excelente difusão das fragrâncias e uma experiência superior em cada vela.
               </p>
 
             </div>
@@ -645,43 +644,42 @@ export default function Home() {
       </section>
 
       {/* BANNER EMOCIONAL */}
-      <section className="relative h-[520px] overflow-hidden">
+      <section className="relative h-[500px] md:h-[650px] overflow-hidden">
 
         <img
-          src="/images/vela2alecrim.jpeg"
+          src="/images/Cereja_e_Avela_2.png"
           alt="Alúria Premium"
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-black/40" />
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center text-white">
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 md:px-12">
 
-          <p className="mb-6 text-sm uppercase tracking-[0.4em] text-white/80">
-            Alúria Premium
-          </p>
+          <div className="max-w-2xl text-white">
 
-          <h2 className="mb-8 max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
+            <p className="mb-4 text-sm uppercase tracking-[0.35em] text-white/80">
+              Descubra sua fragrância
+            </p>
 
-            Transforme ambientes em experiências memoráveis.
+            <h2 className="mb-6 text-4xl md:text-6xl font-bold leading-tight">
+              Cada fragrância conta uma história diferente.
+            </h2>
 
-          </h2>
+            <p className="max-w-xl text-base md:text-lg leading-relaxed text-white/85 text-justify">
+              Das notas relaxantes da lavanda aos aromas envolventes do vetiver,
+              cada coleção foi desenvolvida para criar sensações únicas e
+              transformar a atmosfera dos ambientes.
+            </p>
 
-          <p className="max-w-2xl text-lg leading-relaxed text-white/80">
+            <a
+              href="#colecoes"
+              className="mt-10 inline-flex rounded-full border border-white px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-[#2d2218]"
+            >
+              Escolher Minha Fragrância
+            </a>
 
-            Fragrâncias sofisticadas desenvolvidas para criar atmosferas acolhedoras,
-            elegantes e emocionalmente marcantes.
-
-          </p>
-
-          <a
-            href="#colecoes"
-            className="mt-10 inline-flex rounded-full border border-white px-8 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-[#2d2218]"
-          >
-
-            Explorar Coleção
-
-          </a>
+          </div>
 
         </div>
 
