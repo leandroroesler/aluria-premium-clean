@@ -104,23 +104,24 @@ export default function Home() {
 
         <div className="flex items-center">
 
-          <Image
+          <button
+           onClick={() => setMenuOpen(true)}
+          className="mr-4 text-3xl md:hidden"
+       >
+          ☰
+        </button>
+
+            <Image
             src="/images/logo-aluria.png"
             alt="Alúria Premium"
             width={420}
             height={140}
             priority
-            className="object-contain w-[220px] md:w-[300px] h-auto"
+            className="object-contain w-[180px] md:w-[300px] h-auto"
         />
 
         </div>
 
-        <button
-          onClick={() => setMenuOpen(true)}
-          className="text-3xl md:hidden"
-        >
-        ☰
-    </button>
         
         <nav className="hidden gap-8 text-sm uppercase tracking-[0.2em] md:flex">
 
