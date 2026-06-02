@@ -690,51 +690,85 @@ export default function Home() {
 
         <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
 
-          <h3 className="mb-5 text-4xl font-semibold text-white">
-            Aluria Premium
-          </h3>
+          <h3 className="mb-4 text-3xl md:text-4xl font-semibold text-white">
+              Alúria Premium
+            </h3>
 
           <div className="mb-8 h-[1px] w-20 bg-[#b89574]" />
 
-          <p className="max-w-3xl text-[17px] leading-[1.9] text-[#d8cfc5]">
-
-            Velas aromáticas premium desenvolvidas para transformar ambientes
-            em experiências sofisticadas. Unimos fragrâncias exclusivas,
-            produção artesanal e design minimalista para criar momentos
-            de bem-estar, conforto e elegância.
-
+          <p className="max-w-2xl text-[17px] leading-[1.9] text-[#d8cfc5]">
+            Transformando ambientes em experiências sofisticadas através de
+            fragrâncias exclusivas, design elegante e produção artesanal.
           </p>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-10 text-[18px]">
+          <div className="mt-14 grid gap-12 text-center md:grid-cols-3">
 
-            <Link
-              href="/sobre"
-              className="transition hover:text-white"
-            >
-              Nossa História
-            </Link>
+        <div>
 
-            <Link
-              href="/contato"
-              className="transition hover:text-white"
-            >
-              Fale Conosco
-            </Link>
+          <h4 className="mb-4 text-sm uppercase tracking-[0.25em] text-[#b89574]">
+            Navegação
+          </h4>
 
-            <a
-              href="https://wa.me/5548999567140"
-              target="_blank"
-              className="transition hover:text-white"
-            >
-              WhatsApp
-            </a>
+              <div className="flex flex-col gap-3">
 
-            <a
-              href="mailto:contato@aluriapremium.com.br"
-              className="transition hover:text-white"
-            >
-              E-mail
-            </a>
+                <a href="#colecoes">
+                  Coleções
+                </a>
+
+                <Link href="/sobre">
+                  Nossa História
+                </Link>
+
+                <Link href="/contato">
+                  Contato
+                </Link>
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <h4 className="mb-4 text-sm uppercase tracking-[0.25em] text-[#b89574]">
+                Atendimento
+              </h4>
+
+              <div className="flex flex-col gap-3">
+
+                <a
+                  href="https://wa.me/5548999567140"
+                  target="_blank"
+                >
+                  WhatsApp
+                </a>
+
+                <a href="mailto:contato@aluriapremium.com.br">
+                  contato@aluriapremium.com.br
+                </a>
+
+              </div>
+
+            </div>
+
+            <div>
+
+              <h4 className="mb-4 text-sm uppercase tracking-[0.25em] text-[#b89574]">
+                Confiança
+              </h4>
+
+              <div className="flex flex-col gap-3">
+
+                <span>
+                  Pagamento Seguro
+                </span>
+
+                <span>
+                  Checkout Protegido
+                </span>
+
+              </div>
+
+            </div>
 
           </div>
 
