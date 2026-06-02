@@ -315,19 +315,19 @@ export default function Home() {
       </section>
 
       {/* EXPERIÊNCIA ALÚRIA */}
-      <section className="bg-[#f5efe8] px-10 py-24">
+      <section className="bg-[#f5efe8] px-6 md:px-10 py-16 md:py-20">
 
-        <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
 
-          <div className="relative overflow-hidden rounded-[40px]">
+          <div className="mx-auto w-full max-w-[620px] overflow-hidden rounded-[40px]">
 
             <img
-              src="/images/vela3vertiver.jpeg"
-              alt="Experiência Alúria Premium"
-              className="h-[650px] w-full object-cover"
-            />
+            src="/images/vela3vertiver.jpeg"
+            alt="Experiência Alúria Premium"
+            className="w-full h-auto object-contain"
+          />
 
-          </div>
+        </div>
 
           <div>
 
@@ -335,13 +335,13 @@ export default function Home() {
               Experiência Alúria
             </p>
 
-            <h2 className="mb-8 text-5xl font-bold leading-tight text-[#2d2218]">
+            <h2 className="mb-6 text-3xl md:text-[52px] font-bold leading-tight text-[#2d2218]">
 
               Fragrâncias desenvolvidas para transformar ambientes em experiências sofisticadas.
 
             </h2>
 
-            <p className="mb-6 text-[17px] leading-8 text-[#6b5a4d]">
+            <p className="mb-6 text-[17px] leading-8 text-[#6b5a4d] text-justify">
 
               Cada vela da Alúria Premium é produzida para criar atmosferas acolhedoras,
               elegantes e memoráveis. Uma combinação entre design minimalista,
@@ -349,7 +349,7 @@ export default function Home() {
 
             </p>
 
-            <p className="mb-10 text-lg leading-relaxed text-[#6b5a4d]">
+            <p className="mb-10 text-lg leading-relaxed text-[#6b5a4d] text-justify">
 
               Desenvolvemos composições olfativas sofisticadas que elevam a experiência
               dos ambientes e traduzem conforto, elegância e personalidade.
@@ -370,6 +370,190 @@ export default function Home() {
         </div>
 
       </section>
+
+
+      {/* CERA DE COCO PREMIUM */}
+<section className="bg-white px-6 md:px-10 py-20 md:py-24">
+
+  <div className="mx-auto max-w-7xl">
+
+    {/* CABEÇALHO */}
+    <div className="mb-16 md:mb-20 text-center">
+
+      <p className="mb-4 text-sm uppercase tracking-[0.35em] text-[#8a7768]">
+        Cera de Coco Premium
+      </p>
+
+      <h2 className="mb-6 text-4xl md:text-5xl font-bold text-[#2d2218]">
+        A Diferença Está na Cera
+      </h2>
+
+      <p className="mx-auto max-w-3xl text-lg md:text-xl leading-relaxed text-[#6b5a4d]">
+        Utilizamos cera de coco premium para proporcionar uma queima mais limpa,
+        melhor difusão das fragrâncias e uma experiência sensorial superior em
+        cada vela.
+      </p>
+
+    </div>
+
+    {/* CARDS */}
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+      <div className="rounded-[30px] bg-[#f5efe8] p-8 text-center">
+
+        <div className="mb-5 text-5xl">
+          🌿
+        </div>
+
+        <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
+          Origem Vegetal
+        </h3>
+
+        <p className="leading-relaxed text-[#6b5a4d] text-justify">
+          Produzida a partir do coco, uma matéria-prima renovável que oferece
+          uma alternativa mais sustentável às ceras tradicionais.
+        </p>
+
+      </div>
+
+      <div className="rounded-[30px] bg-[#f5efe8] p-8 text-center">
+
+        <div className="mb-5 text-5xl">
+          ✨
+        </div>
+
+        <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
+          Queima Mais Limpa
+        </h3>
+
+        <p className="leading-relaxed text-[#6b5a4d] text-justify">
+          Menor emissão de resíduos e combustão mais uniforme, proporcionando
+          uma experiência mais agradável dentro do ambiente.
+        </p>
+
+      </div>
+
+      <div className="rounded-[30px] bg-[#f5efe8] p-8 text-center">
+
+        <div className="mb-5 text-5xl">
+          🌸
+        </div>
+
+        <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
+          Melhor Difusão
+        </h3>
+
+        <p className="leading-relaxed text-[#6b5a4d] text-justify">
+          Liberação gradual das fragrâncias, permitindo que os aromas sejam
+          percebidos de forma elegante e equilibrada.
+        </p>
+
+      </div>
+
+      <div className="rounded-[30px] bg-[#f5efe8] p-8 text-center">
+
+        <div className="mb-5 text-5xl">
+          🕯️
+        </div>
+
+        <h3 className="mb-4 text-2xl font-bold text-[#2d2218]">
+          Experiência Premium
+        </h3>
+
+        <p className="leading-relaxed text-[#6b5a4d] text-justify">
+          Combinação ideal entre desempenho, acabamento e sofisticação para
+          transformar qualquer ambiente.
+        </p>
+
+      </div>
+
+    </div>
+
+    {/* TABELA */}
+    <div className="mt-16 md:mt-20 overflow-hidden rounded-[30px] border border-[#e7ddd3]">
+
+      <div className="overflow-x-auto">
+
+        <table className="w-full min-w-[650px]">
+
+          <thead>
+
+            <tr className="bg-[#f5efe8]">
+
+              <th className="px-6 py-5 text-left text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                Característica
+              </th>
+
+              <th className="px-6 py-5 text-left text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                Cera de Coco Premium
+              </th>
+
+              <th className="px-6 py-5 text-left text-sm uppercase tracking-[0.2em] text-[#8a7768]">
+                Parafina Tradicional
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr className="border-t border-[#e7ddd3]">
+              <td className="px-6 py-4 font-medium">Origem</td>
+              <td className="px-6 py-4">Vegetal</td>
+              <td className="px-6 py-4">Derivada do petróleo</td>
+            </tr>
+
+            <tr className="border-t border-[#e7ddd3]">
+              <td className="px-6 py-4 font-medium">Queima</td>
+              <td className="px-6 py-4">Mais limpa e uniforme</td>
+              <td className="px-6 py-4">Pode gerar mais resíduos</td>
+            </tr>
+
+            <tr className="border-t border-[#e7ddd3]">
+              <td className="px-6 py-4 font-medium">Difusão do Aroma</td>
+              <td className="px-6 py-4">Excelente</td>
+              <td className="px-6 py-4">Moderada</td>
+            </tr>
+
+            <tr className="border-t border-[#e7ddd3]">
+              <td className="px-6 py-4 font-medium">Sustentabilidade</td>
+              <td className="px-6 py-4">Alta</td>
+              <td className="px-6 py-4">Baixa</td>
+            </tr>
+
+            <tr className="border-t border-[#e7ddd3]">
+              <td className="px-6 py-4 font-medium">Experiência Sensorial</td>
+              <td className="px-6 py-4">Premium</td>
+              <td className="px-6 py-4">Convencional</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    {/* FECHAMENTO */}
+    <div className="mx-auto mt-14 md:mt-16 max-w-4xl text-center">
+
+      <p className="text-lg md:text-xl leading-relaxed text-[#6b5a4d]">
+
+        Na Alúria Premium, cada detalhe importa. Desde a seleção das
+        fragrâncias até a escolha da cera de coco premium, desenvolvemos velas
+        que transformam momentos simples em experiências sofisticadas,
+        acolhedoras e memoráveis.
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
 
       {/* DIFERENCIAIS */}
       <section className="bg-white px-10 py-24">
