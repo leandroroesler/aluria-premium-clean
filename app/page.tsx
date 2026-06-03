@@ -294,7 +294,7 @@ export default function Home() {
 
           </h1>
 
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed md:text-xl text-white/90">S
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed md:text-xl text-white/90">
 
             Velas aromáticas artesanais criadas para proporcionar conforto,
             elegância e bem-estar em cada momento.
