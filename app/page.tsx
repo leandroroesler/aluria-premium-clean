@@ -155,12 +155,12 @@ export default function Home() {
         </button>
 
             <Image
-              src="/images/logo-aluria.png"
+              src="/images/logo-aluria-2.png"
               alt="Alúria Premium"
               width={420}
               height={140}
               priority
-              className="object-contain w-[320px] md:w-[520px] h-auto drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
+              className="object-contain w-[260px] md:w-[380px] h-auto drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
             />
 
         </div>
@@ -286,15 +286,15 @@ export default function Home() {
 
         <div className="absolute inset-0 bg-black/55" />
 
-        <div className="relative z-10 px-6 text-center text-white">
+        <div className="relative z-10 px-6 text-center text-white mt-24 md:mt-32">
 
-          <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-bold leading-tight md:text-7xl">
+          <h1 className="mx-auto mb-6 max-w-3xl text-4xl font-bold leading-tight md:text-6xl xl:text-7xl">
 
             Transforme ambientes em experiências memoráveis
 
           </h1>
 
-          <p className="mx-auto max-w-3xl text-lg leading-relaxed md:text-2xl text-white/90">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed md:text-xl text-white/90">S
 
             Velas aromáticas artesanais criadas para proporcionar conforto,
             elegância e bem-estar em cada momento.
