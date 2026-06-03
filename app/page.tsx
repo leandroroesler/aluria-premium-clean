@@ -148,11 +148,11 @@ export default function Home() {
         <div className="flex items-center">
 
           <button
-           onClick={() => setMenuOpen(true)}
-          className="mr-4 text-3xl md:hidden"
-       >
-          ☰
-        </button>
+            onClick={() => setMenuOpen(true)}
+            className="mr-4 text-3xl md:hidden text-white drop-shadow-[0_0_12px_rgba(0,0,0,0.9)]"
+          >
+            ☰
+          </button>
 
             <Image
               src="/images/logo-aluria-2.png"
