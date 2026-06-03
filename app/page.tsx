@@ -1,9 +1,10 @@
 "use client";
 
 import { useCart } from "../context/CartContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ShoppingBag } from "lucide-react";
 
 export default function Home() {
 
@@ -15,6 +16,8 @@ export default function Home() {
 
   const [cartSuccessOpen, setCartSuccessOpen] =
     useState(false);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const products = {
 
@@ -104,6 +107,32 @@ export default function Home() {
 
   };
 
+    const heroImages = [
+    "/images/Lavanda 3.png",
+    "/images/Cereja_e_Avela.png",
+    "/images/Cha_Branco_Roma.PNG",
+    "/images/vela3vertiver.jpeg",
+    "/images/vela1broto.jpeg",
+  ];
+
+    useEffect(() => {
+
+    const interval = setInterval(() => {
+
+      setCurrentSlide((prev) =>
+
+        prev === heroImages.length - 1
+          ? 0
+          : prev + 1
+
+      );
+
+    }, 5000);
+
+    return () => clearInterval(interval);
+
+  }, []);
+
   const product =
     products[
       openProduct as keyof typeof products
@@ -126,40 +155,40 @@ export default function Home() {
         </button>
 
             <Image
-            src="/images/logo-aluria.png"
-            alt="Alúria Premium"
-            width={420}
-            height={140}
-            priority
-            className="object-contain w-[180px] md:w-[300px] h-auto"
-        />
+              src="/images/logo-aluria.png"
+              alt="Alúria Premium"
+              width={420}
+              height={140}
+              priority
+              className="object-contain w-[320px] md:w-[520px] h-auto drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
+            />
 
         </div>
 
         
-        <nav className="hidden gap-8 text-sm uppercase tracking-[0.2em] md:flex">
+        <nav className="hidden gap-8 text-sm uppercase tracking-[0.2em] text-white md:flex">
 
-          <a href="#" className="transition hover:opacity-70">
+          <a href="#" className="text-white transition hover:opacity-80">
             Home
           </a>
 
           <a
             href="#colecoes"
-            className="transition hover:opacity-70"
+            className="text-white transition hover:opacity-80"
           >
             Coleções
           </a>
 
           <Link
             href="/sobre"
-            className="transition hover:opacity-70"
+            className="text-white transition hover:opacity-80"
           >
             Sobre
           </Link>
 
           <Link
             href="/contato"
-            className="transition hover:opacity-70"
+            className="text-white transition hover:opacity-80"
           >
             Contato
           </Link>
@@ -169,14 +198,15 @@ export default function Home() {
         {/* CARRINHO */}
         <a
           href="/carrinho"
-          className="relative flex items-center transition hover:scale-105"
+          className="relative z-50 flex items-center transition hover:scale-105"
         >
 
-          <span className="text-3xl">
-            🛒
-          </span>
+          <ShoppingBag
+            size={32}
+            className="text-white drop-shadow-[0_0_12px_rgba(0,0,0,0.9)]"
+          />
 
-          <span className="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#2d2218] text-xs text-white">
+          <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#2d2218] text-xs font-semibold text-white shadow-lg">
             {totalItems}
           </span>
 
@@ -236,18 +266,49 @@ export default function Home() {
 )}
 
       {/* HERO */}
-      <section className="flex min-h-[70vh] flex-col items-center justify-center px-6 pt-36 text-center">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
 
-        <p className="max-w-3xl text-xl leading-relaxed text-[#6b5a4d] md:text-2xl">
-          Velas aromáticas artesanais criadas para proporcionar conforto, elegância e bem-estar em cada momento.
-        </p>
+        {heroImages.map((image, index) => (
 
-        <a
-          href="#colecoes"
-          className="mt-12 inline-block rounded-full bg-[#2d2218] px-10 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:opacity-90"
-        >
-          Explorar Coleção
-        </a>
+          <img
+            key={image}
+            src={image}
+            alt=""
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms]
+            ${
+              currentSlide === index
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          />
+
+        ))}
+
+        <div className="absolute inset-0 bg-black/55" />
+
+        <div className="relative z-10 px-6 text-center text-white">
+
+          <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-bold leading-tight md:text-7xl">
+
+            Transforme ambientes em experiências memoráveis
+
+          </h1>
+
+          <p className="mx-auto max-w-3xl text-lg leading-relaxed md:text-2xl text-white/90">
+
+            Velas aromáticas artesanais criadas para proporcionar conforto,
+            elegância e bem-estar em cada momento.
+
+          </p>
+
+          <a
+            href="#colecoes"
+            className="mt-12 inline-block rounded-full border border-white px-10 py-4 text-sm uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-[#2d2218]"
+          >
+            Explorar Coleção
+          </a>
+
+        </div>
 
       </section>
 
