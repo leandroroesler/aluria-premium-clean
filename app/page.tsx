@@ -284,7 +284,7 @@ export default function Home() {
 
         ))}
 
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-black/20" />
 
         <div className="relative z-10 px-6 text-center text-white mt-24 md:mt-32">
 
