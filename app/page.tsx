@@ -32,7 +32,7 @@ export default function Home() {
       weight: "100g",
       environment:
         "Salas de estar, quartos, halls e ambientes sofisticados com atmosfera aconchegante e elegante.",
-      image: "/images/vela3vertiver.jpeg",
+      image: "/images/Vertiver.png",
     },
 
     bamboo: {
@@ -46,7 +46,7 @@ export default function Home() {
       weight: "100g",
       environment:
         "Lavabos, salas, escritórios, quartos e ambientes minimalistas que buscam frescor e sofisticação.",
-      image: "/images/vela1broto.jpeg",
+      image: "/images/Brotodebamboo.png",
     },
 
     alecrim: {
@@ -60,7 +60,7 @@ export default function Home() {
       weight: "100g",
       environment:
         "Quartos, salas de leitura, espaços de relaxamento e ambientes que pedem aconchego e tranquilidade.",
-      image: "/images/vela2alecrim.jpeg",
+      image: "/images/Alecrim.png",
     },
 
     chaBrancoRoma: {
@@ -74,7 +74,7 @@ export default function Home() {
       weight: "100g",
       environment:
         "Quartos, salas, lavabos, escritórios e ambientes sofisticados.",
-      image: "/images/Cha_Branco_Roma.PNG",
+      image: "/images/Chabranco.png",
     },
 
     cerejaeavela: {
@@ -102,17 +102,17 @@ export default function Home() {
       weight: "100g",
       environment:
         "Quartos, salas de descanso, espaços de leitura, spas e ambientes que valorizam serenidade, conforto e bem-estar.",
-      image: "/images/Lavanda 3.png",
+      image: "/images/Lavanda.png",
 },
 
   };
 
     const heroImages = [
-    "/images/Lavanda 3.png",
+    "/images/Lavanda.png",
     "/images/Cereja_e_Avela.png",
-    "/images/Cha_Branco_Roma.PNG",
-    "/images/vela3vertiver.jpeg",
-    "/images/vela1broto.jpeg",
+    "/images/Chabranco.png",
+    "/images/Vertiver.png",
+    "/images/Brotodebamboo.png",
   ];
 
     useEffect(() => {
@@ -383,7 +383,7 @@ export default function Home() {
           <div className="mx-auto w-full max-w-[620px] overflow-hidden rounded-[40px]">
 
             <img
-            src="/images/vela3vertiver.jpeg"
+            src="/images/Vertiver.png"
             alt="Experiência Alúria Premium"
             className="w-full h-auto object-contain"
           />
