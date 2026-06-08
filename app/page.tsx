@@ -155,7 +155,7 @@ export default function Home() {
           </button>
 
             <Image
-              src="/images/logo-aluria-2.png"
+              src="/images/logo-aluria-3.png"
               alt="Alúria Premium"
               width={420}
               height={140}
